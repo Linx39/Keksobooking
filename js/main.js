@@ -69,14 +69,20 @@ const Longitude = {
   MAX: 139.80000,
 };
 
-//Массив авторов
-const authors = [];
-for (let i = 0; i < NUMBER_AUTHORS; i++) {
+//Создание массива авторов
+const authors = new Array(NUMBER_AUTHORS).fill(null).map((curentValue, i) => {
   let imageIndex = (String(i+1).length === 1) ? ('0' + (i + 1)) : (i + 1);
-  authors.push({
+  return {
     avatar: 'img/avatars/user' + imageIndex + '.png',
-  })
-}
+  }
+})
+// const authors = [];
+// for (let i = 0; i < NUMBER_AUTHORS; i++) {
+//   let imageIndex = (String(i+1).length === 1) ? ('0' + (i + 1)) : (i + 1);
+//   authors.push({
+//     avatar: 'img/avatars/user' + imageIndex + '.png',
+//   })
+// }
 
 //Массивы значений для создания объекта offer
 const titles = ['Суперпредложение!', 'Роскошные аппартаменты', 'Скидка только сегодня!', 'Дёшево и сердито', 'Скромно, но с вкусом']
@@ -118,9 +124,10 @@ const createAdvertisement = () => {
 };
 
 //Создание массива объявлений
-const advertisements = [];
-for (let i = 0; i < NUMBER_ADVERTISEMENT; i++) {
-  advertisements.push(createAdvertisement());
-}
+const advertisements = new Array(NUMBER_ADVERTISEMENT).fill(null).map(() => createAdvertisement());
+// const advertisements = [];
+// for (let i = 0; i < NUMBER_ADVERTISEMENT; i++) {
+//   advertisements.push(createAdvertisement());
+// }
 
 console.log (advertisements);
