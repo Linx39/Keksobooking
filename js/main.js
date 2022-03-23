@@ -40,17 +40,6 @@ const getRandomArrayFromArray = (arrayValues) => {
   );
 };
 
-// const getRandomArrayFromArray = (arrayValues) => {
-//   let randomArrayValues = [];
-//   for (let i = 0; i < getRandomInteger(1, arrayValues.length); i++) {
-//     let valuesNew = arrayValues[getRandomInteger(0, arrayValues.length-1)];
-//     if (randomArrayValues.some((element) => {return element === valuesNew}) === false) {
-//       randomArrayValues.push(valuesNew);
-//     }
-//   }
-//   return randomArrayValues;
-// };
-
 //Константы
 const NUMBER_AUTHORS = 10;
 const NUMBER_ADVERTISEMENT = 10;
@@ -76,13 +65,6 @@ const authors = new Array(NUMBER_AUTHORS).fill(null).map((curentValue, i) => {
     avatar: 'img/avatars/user' + imageIndex + '.png',
   }
 })
-// const authors = [];
-// for (let i = 0; i < NUMBER_AUTHORS; i++) {
-//   let imageIndex = (String(i+1).length === 1) ? ('0' + (i + 1)) : (i + 1);
-//   authors.push({
-//     avatar: 'img/avatars/user' + imageIndex + '.png',
-//   })
-// }
 
 //Массивы значений для создания объекта offer
 const titles = ['Суперпредложение!', 'Роскошные аппартаменты', 'Скидка только сегодня!', 'Дёшево и сердито', 'Скромно, но с вкусом']
@@ -125,9 +107,5 @@ const createAdvertisement = () => {
 
 //Создание массива объявлений
 const advertisements = new Array(NUMBER_ADVERTISEMENT).fill(null).map(() => createAdvertisement());
-// const advertisements = [];
-// for (let i = 0; i < NUMBER_ADVERTISEMENT; i++) {
-//   advertisements.push(createAdvertisement());
-// }
 
 console.log (advertisements);
