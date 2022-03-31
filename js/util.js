@@ -31,13 +31,16 @@ const getRandomArrayElement = (elements) => {
 
 //Функция создания массива случайной длины со случайными неповторяющимися значениями из базового массива
 const getRandomArrayFromArray = (arrayValues) => {
-  return new Array(getRandomInteger(1, arrayValues.length)).fill(null).map((currentValue, index, array) => {
-    let valuesNew = arrayValues[getRandomInteger(0, arrayValues.length-1)];
-    if (array.some((element) => {return element === valuesNew}) === false) {
-      return valuesNew;
+  const randomArray = [];
+
+  for ( let i = 0; i < getRandomInteger(1, arrayValues.length); i++) {
+    const valuesNew = arrayValues[getRandomInteger(0, arrayValues.length-1)];
+    if ( !(randomArray.some((element) => {return element === valuesNew})) ) {
+      randomArray.push(valuesNew);
     }
-  },
-  );
+  }
+  
+  return randomArray;
 };
 
 export { getRandomInteger, getRandom, getRandomArrayElement, getRandomArrayFromArray };

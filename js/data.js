@@ -66,6 +66,6 @@ const createAdvertisement = () => {
 };
 
 //Создание массива объявлений
-const advertisements = new Array(NUMBER_ADVERTISEMENT).fill(null).map(() => createAdvertisement());
+const createAdvertisements = () => new Array(NUMBER_ADVERTISEMENT).fill(null).map(() => createAdvertisement());
 
-export { advertisements };
+export { createAdvertisements };
