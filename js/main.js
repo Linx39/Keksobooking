@@ -1,3 +1,3 @@
 import './popup.js';
-// import './notice.js';
+import './notice.js';
 
