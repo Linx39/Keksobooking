@@ -13,7 +13,7 @@ const templatePopup = document.querySelector('#card').content.querySelector('.po
 const fragment = document.createDocumentFragment();
 const advertisements = createAdvertisements();
 
-advertisements.forEach((card) => {  
+advertisements.forEach((card) => {
   const cardElement = templatePopup.cloneNode(true);
   const cardOffer = card.offer;
 
@@ -30,7 +30,7 @@ advertisements.forEach((card) => {
     popupFeatures.removeChild(popupFeatures.firstChild);
   }
   const fragmentFeatures = document.createDocumentFragment();
-  cardOffer.features.forEach((feature) => {                  
+  cardOffer.features.forEach((feature) => {
     const featureElement = document.createElement('li');
     const classFeutureElement = `popup__feature--${feature}`;
     featureElement.classList.add('popup__feature');
@@ -57,4 +57,4 @@ advertisements.forEach((card) => {
   fragment.appendChild(cardElement);
 });
 
-mapCanvas.appendChild(fragment.children[0]);
+// mapCanvas.appendChild(fragment.children[0]);
