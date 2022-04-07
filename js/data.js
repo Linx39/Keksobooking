@@ -1,6 +1,5 @@
 import { getRandomInteger, getRandom, getRandomArrayElement, getRandomArrayFromArray } from './util.js';
 
-//Константы
 const NUMBER_AUTHORS = 10;
 const NUMBER_ADVERTISEMENT = 10;
 const Price = {
@@ -59,13 +58,14 @@ const createAdvertisement = () => {
     },
   }
 
-  advertisement.offer.address = advertisement.location.x + ', ' + advertisement.location.y;
+  // advertisement.offer.address = advertisement.location.x + ', ' + advertisement.location.y;
+  advertisement.offer.address = `${advertisement.location.x}, ${advertisement.location.y}`;
 
   return advertisement;
 
 };
 
-//Создание массива объявлений
+//Функция создания массива объявлений
 const createAdvertisements = () => new Array(NUMBER_ADVERTISEMENT).fill(null).map(() => createAdvertisement());
 
 export { createAdvertisements };

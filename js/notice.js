@@ -7,16 +7,20 @@ const MIN_PRICE ={
 
 const type = document.querySelector('#type');
 const price = document.querySelector('#price');
+const adress = document.querySelector('[name="address"]');
+const timein = document.querySelector('#timein');
+const timeout = document.querySelector('#timeout');
 
-//работает не до конца
+//Запрет редактирования поля "адрес"
+adress.setAttribute('disabled', 'disabled');
+
+//Установка минимальных значений для поля "цена"                              // внимание!!! работает не до конца
 type.addEventListener('change', () => {
   price.min = MIN_PRICE[type.value];
   price.placeholder = MIN_PRICE[type.value];
 })
 
-const timein = document.querySelector('#timein');
-const timeout = document.querySelector('#timeout');
-
+//Корректировка значений полей "заезд"/"выезд"
 timein.addEventListener('change', () => {
   timeout.value = timein.value;
 })

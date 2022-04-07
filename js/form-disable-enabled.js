@@ -1,3 +1,4 @@
+//Функция деактивации формы и блокирование полей
 const formDisabled = () => {
   const elementDisabled = (form, field) => {
     const formFields = form.querySelectorAll(field);
@@ -18,7 +19,7 @@ const formDisabled = () => {
   elementDisabled(mapFilters, 'select');
 }
 
-
+//Функция активации формы и разблокирования полей
 const formEnabled = () => {
   const elementEnabled = (form, field) => {
     const formFields = form.querySelectorAll(field);
