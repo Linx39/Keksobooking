@@ -1,7 +1,6 @@
 /* global L:readonly */
 
 import { formDisabled, formEnabled } from './form-disable-enabled.js';
-import { createPopup } from './popup.js';
 import { createAdvertisements } from './data.js';
 
 const Center = {
