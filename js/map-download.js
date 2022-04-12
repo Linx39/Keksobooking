@@ -128,6 +128,10 @@ popups.forEach ((popup) => {
 
   marker
     .addTo(map)
-    .bindPopup(createCostumPopup(popup));
+    .bindPopup(
+      createCostumPopup(popup),
+      {
+        keepInView: true,
+      });
 })
 

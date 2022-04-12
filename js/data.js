@@ -4,15 +4,15 @@ const NUMBER_AUTHORS = 10;
 const NUMBER_ADVERTISEMENT = 10;
 const Price = {
   MIN: 1,
-  MAX: 10000,
+  MAX: 1000000,
 };
 const MAX_ROOMS = 20;
 const MAX_GUESTS = 20;
-const Latitude = {
+const Lat = {
   MIN: 35.65000,
   MAX: 35.70000,
 };
-const Longitude = {
+const Lng = {
   MIN: 139.70000,
   MAX: 139.80000,
 };
@@ -53,8 +53,8 @@ const createAdvertisement = () => {
       photos: getRandomArrayFromArray(photosValues)},
 
     location: {
-      x: getRandom(Latitude.MIN, Latitude.MAX, 5),
-      y: getRandom(Longitude.MIN, Longitude.MAX, 5),
+      x: getRandom(Lat.MIN, Lat.MAX, 5),
+      y: getRandom(Lng.MIN, Lng.MAX, 5),
     },
   }
 

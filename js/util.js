@@ -33,7 +33,7 @@ const getRandomArrayElement = (elements) => {
 const getRandomArrayFromArray = (arrayValues) => {
   const randomArray = [];
 
-  for ( let i = 0; i < getRandomInteger(1, arrayValues.length); i++) {
+  for ( let i = 0; i < getRandomInteger(0, arrayValues.length); i++) {
     const valuesNew = arrayValues[getRandomInteger(0, arrayValues.length-1)];
     if ( !(randomArray.some((element) => {return element === valuesNew})) ) {
       randomArray.push(valuesNew);

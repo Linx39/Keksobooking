@@ -7,8 +7,6 @@ const TYPE_RUS = {
   'palace': 'Дворец',
 };
 
-// const mapCanvas = document.querySelector('.map__canvas');
-
 //Заполнение данных для попапа с объявлением
 const createPopup = () => {
   const templatePopup = document.querySelector('#card').content.querySelector('.popup');
@@ -58,9 +56,6 @@ const createPopup = () => {
     fragment.appendChild(cardElement);
   });
   return fragment;
-  // mapCanvas.appendChild(fragment.children[0]);
 }
-
-// createPopup();
 
 export { createPopup };
