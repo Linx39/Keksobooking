@@ -19,14 +19,18 @@ const Room_Capacities = {
   100: [0],
 }
 
-const title = document.querySelector('#title');
-const type = document.querySelector('#type');
-const price = document.querySelector('#price');
-const adress = document.querySelector('[name="address"]');
-const timein = document.querySelector('#timein');
-const timeout = document.querySelector('#timeout');
-const roomNumber = document.querySelector('#room_number');
-const capacity = document.querySelector('#capacity');
+const adForm = document.querySelector('.ad-form');
+const title = adForm.querySelector('#title');
+const type = adForm.querySelector('#type');
+const price = adForm.querySelector('#price');
+const adress = adForm.querySelector('[name="address"]');
+const timein = adForm.querySelector('#timein');
+const timeout = adForm.querySelector('#timeout');
+const roomNumber = adForm.querySelector('#room_number');
+const capacity = adForm.querySelector('#capacity');
+
+title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';
+price.value = '1500';
 
 //Валидация поля "заголовок"
 title.addEventListener('input', () => {
@@ -41,7 +45,7 @@ title.addEventListener('input', () => {
   }
 
   title.reportValidity();
-})
+});
 
 //Запрет редактирования поля "адрес"
 adress.setAttribute('readonly', 'readonly');
@@ -52,7 +56,7 @@ type.addEventListener('change', () => {
   price.placeholder = PRICE_MIN[type.value];
   price.value = '';
   price.setCustomValidity('');
-})
+});
 
 //Валидация поля "цена"
 price.addEventListener ('input', () => {
@@ -69,16 +73,16 @@ price.addEventListener ('input', () => {
   }
 
   price.reportValidity();
-})
+});
 
 //Синхронизация полей "заезд"/"выезд"
 timein.addEventListener('change', () => {
   timeout.value = timein.value;
-})
+});
 
 timeout.addEventListener('change', () => {
   timein.value = timeout.value;
-})
+});
 
 //Синхронизация полей "количество комнат"/"количество гостей"
 const disabledCapasity = () => {
@@ -96,10 +100,40 @@ const disabledCapasity = () => {
   });
 
   capacity.value = roomCapacities[0];
-}
+};
 
 disabledCapasity();
 
 roomNumber.addEventListener('change', () => {
   disabledCapasity();
-})
+});
+
+const onSuc = () => {console.log('ok!ok!')};
+
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const formData = new FormData(evt.target);
+
+    fetch(
+      'https://23.javascript.pages.academy/keksobooking',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+      .then((response) => {
+        if (response.ok) {
+          onSuccess()}
+        else {
+          console.log('err!!!');
+        }})
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+};
+setUserFormSubmit(onSuc);
+
+export { setUserFormSubmit };
