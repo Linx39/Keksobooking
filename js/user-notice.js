@@ -29,8 +29,8 @@ const timeout = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 
-title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';
-price.value = '1500';
+title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';                     //для проверки
+price.value = '1500';                                                             //для проверки
 
 //Валидация поля "заголовок"
 title.addEventListener('input', () => {

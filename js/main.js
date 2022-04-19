@@ -1,11 +1,19 @@
-import './notice.js';
-import './map-download.js';
+// import './map-download.js';
+// import './user-notice.js';
 import {renderPopups} from './map-download.js';
+import { getData } from './api.js';
+import { showAlert } from './util.js';
 
-const ADVERTISIMENT_COUNT = 10;
+const NOTICE_COUNT = 10;
 
-fetch('https://23.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((advertisements) => {
-    renderPopups(advertisements.slice(0, ADVERTISIMENT_COUNT));
-  });
+getData(
+  (notice) => {
+    renderPopups(notice.slice(0, NOTICE_COUNT));
+  },
+);
+
+// fetch('https://23.javascript.pages.academy/keksobooking/data')
+//   .then((response) => response.json())
+//   .then((notice) => {
+//     renderPopups(notice.slice(0, NOTICE_COUNT));
+//   });
