@@ -51,10 +51,12 @@ type.addEventListener('change', () => {
   price.min = PRICE_MIN[type.value];
   price.placeholder = PRICE_MIN[type.value];
   price.value = '';
+  price.setCustomValidity('');
+
 })
 
 //Валидация поля "цена"
-const checkPriceValidation = () => {
+price.addEventListener ('input', () => {
   if (price.value > PRICE_MAX) {
     price.setCustomValidity(`Цена не может быть больше ${PRICE_MAX} ₽/ночь`);
   } else {
@@ -68,19 +70,6 @@ const checkPriceValidation = () => {
   }
 
   price.reportValidity();
-}
-
-price.addEventListener ('input', () => {
-  checkPriceValidation();
-})
-
-const adFormSubmit = document.querySelector('.ad-form__submit');
-adFormSubmit.addEventListener ('click', () => {
-  checkPriceValidation();
-  
-  if (price.value === '') {
-    price.setCustomValidity('Укажите цену');
-  }
 })
 
 //Синхронизация полей "заезд"/"выезд"
