@@ -41,7 +41,7 @@ const getRandomArrayFromArray = (arrayValues) => {
       randomArray.push(valuesNew);
     }
   }
-  
+
   return randomArray;
 };
 
@@ -88,20 +88,25 @@ const formEnabled = () => {
   elementEnabled(mapFilters, 'select');
 }
 
+//Функция создания блока с сообщением
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
+  // alertContainer.style.width = '50%';
   alertContainer.style.left = 0;
   alertContainer.style.top = 0;
   alertContainer.style.right = 0;
   alertContainer.style.padding = '10px 3px';
   alertContainer.style.fontSize = '30px';
   alertContainer.style.textAlign = 'center';
-  alertContainer.style.backgroundColor = 'red';
-  
+  alertContainer.style.backgroundColor = 'white';
+  alertContainer.style.borderColor = 'red';
+  alertContainer.style.borderWidth = '5px';
+  alertContainer.style.borderStyle = 'dashed';
+
   alertContainer.textContent = message;
-  
+
   document.body.append(alertContainer);
 
   setTimeout(() => {
@@ -109,4 +114,13 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 }
 
-export { getRandomInteger, getRandom, getRandomArrayElement, getRandomArrayFromArray, formDisabled, formEnabled, showAlert };
+//Функция проверки статуса запроса
+const checkStatus = (response) => {
+  if (response.ok) {
+    return response;
+  }
+
+  throw new Error(`${response.status} — ${response.statusText}`);
+}
+
+export { getRandomInteger, getRandom, getRandomArrayElement, getRandomArrayFromArray, formDisabled, formEnabled, showAlert, checkStatus };

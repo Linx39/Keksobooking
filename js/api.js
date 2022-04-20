@@ -1,19 +1,17 @@
-import { showAlert } from './util.js';
+import { checkStatus } from './util.js';
 
 //Получение данных с сервера
-const getData = (onSuccess) => {
-  fetch('https://23.javascript.pages.academy/keksobookin/data')
-    .then ((response) => {
-      if (response.ok) {
-        return response;
-      } else {
-        showAlert('Упс...')
-      }
-    })
+const getData = (onSuccess, onError) => {
+  fetch('https://23.javascript.pages.academy/keksobooking/data')
+    .then(checkStatus)
     .then((response) => response.json())
-    .then((notice) => {
-      onSuccess(notice);
+    .then((json) => {
+      onSuccess(json);
     })
+    // .catch ((error) => {showAlert(`Упс... ${error}`)})
+    .catch((err) => {
+      onError(err);
+    });
 };
 
 

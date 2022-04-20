@@ -48,8 +48,10 @@ const createCostumPopup = (card) => {
     })
     popupPhotos.appendChild(fragmentPhotos);
   }
-
-  cardElement.querySelector('.popup__avatar').src = card.author.avatar;
+  
+  if (card.author.avatar) {
+    cardElement.querySelector('.popup__avatar').src = card.author.avatar;                      //?????
+  }
 
   return cardElement;
 }

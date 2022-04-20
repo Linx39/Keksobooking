@@ -1,3 +1,5 @@
+import { showAlert, checkStatus } from './util.js';
+
 const PRICE_MIN = {
   'bungalow': 0,
   'flat': 1000,
@@ -108,7 +110,7 @@ roomNumber.addEventListener('change', () => {
   disabledCapasity();
 });
 
-const onSuc = () => {console.log('ok!ok!')};
+const onSuc = () => {showAlert('ok!ok!')};
 
 const setUserFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
@@ -121,19 +123,15 @@ const setUserFormSubmit = (onSuccess) => {
       {
         method: 'POST',
         body: formData,
-      },
-    )
-      .then((response) => {
-        if (response.ok) {
-          onSuccess()}
-        else {
-          console.log('err!!!');
-        }})
-      .catch((err) => {
-        console.log(err);
+      })
+      .then (checkStatus)
+      .then (onSuccess)
+      .catch((error) => {
+        showAlert(error);
       });
   })
 };
+
 setUserFormSubmit(onSuc);
 
 export { setUserFormSubmit };
