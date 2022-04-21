@@ -9,11 +9,23 @@ const getData = (onSuccess, onError) => {
       onSuccess(json);
     })
     // .catch ((error) => {showAlert(`Упс... ${error}`)})
-    .catch((err) => {
-      onError(err);
+    .catch((error) => {
+      onError(error);
     });
 };
 
+const sendData = (onSuccess, onError, body) => {
+  fetch(
+    'https://23.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body: body,
+    })
+    .then (checkStatus)
+    .then (() => onSuccess())
+    .catch((error) => {
+      onError(error);
+    });
+};
 
-
-export { getData };
+export { getData, sendData };

@@ -88,6 +88,11 @@ const formEnabled = () => {
   elementEnabled(mapFilters, 'select');
 }
 
+//Функция перехвата события нажатия клавиши ESC
+const isEscEvent = (evt) => {
+  return evt.key === 'Escape' || evt.key === 'Esc';
+};
+
 //Функция создания блока с сообщением
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -112,7 +117,7 @@ const showAlert = (message) => {
   setTimeout(() => {
     alertContainer.remove();
   }, ALERT_SHOW_TIME);
-}
+};
 
 //Функция проверки статуса запроса
 const checkStatus = (response) => {
@@ -121,6 +126,7 @@ const checkStatus = (response) => {
   }
 
   throw new Error(`${response.status} — ${response.statusText}`);
-}
+};
 
-export { getRandomInteger, getRandom, getRandomArrayElement, getRandomArrayFromArray, formDisabled, formEnabled, showAlert, checkStatus };
+export { getRandomInteger, getRandom, getRandomArrayElement, getRandomArrayFromArray };
+export { formDisabled, formEnabled, isEscEvent, showAlert, checkStatus };

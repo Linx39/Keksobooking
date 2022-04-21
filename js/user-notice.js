@@ -1,4 +1,6 @@
-import { showAlert, checkStatus } from './util.js';
+import { showAlert } from './util.js';
+import { sendData } from './api.js';
+import { moveMarkerCenter } from './map-download.js';
 
 const PRICE_MIN = {
   'bungalow': 0,
@@ -30,6 +32,7 @@ const timein = adForm.querySelector('#timein');
 const timeout = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+const buttonReset = adForm.querySelector('.ad-form__reset')
 
 title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';                     //для проверки
 price.value = '1500';                                                             //для проверки
@@ -110,28 +113,28 @@ roomNumber.addEventListener('change', () => {
   disabledCapasity();
 });
 
-const onSuc = () => {showAlert('ok!ok!')};
+//Функции очистки формы
+const formReset = () => {
+  adForm.reset();
+  moveMarkerCenter();
+}
 
+buttonReset.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  formReset();
+})
+
+//Функция отправки формы
 const setUserFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    const formData = new FormData(evt.target);
-
-    fetch(
-      'https://23.javascript.pages.academy/keksobooking',
-      {
-        method: 'POST',
-        body: formData,
-      })
-      .then (checkStatus)
-      .then (onSuccess)
-      .catch((error) => {
-        showAlert(error);
-      });
+    sendData (
+      () => onSuccess(),
+      (error) => showAlert(`О-оох... ${error}`),
+      new FormData(evt.target),
+    );
   })
 };
 
-setUserFormSubmit(onSuc);
-
-export { setUserFormSubmit };
+export { setUserFormSubmit, formReset };

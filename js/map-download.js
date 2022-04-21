@@ -56,6 +56,12 @@ marker.on('moveend', (evt) => {
   address.value = `${markerLatLng.lat.toFixed(5)}, ${markerLatLng.lng.toFixed(5)}`;
 });
 
+//Функция перемещения маркера
+const moveMarkerCenter = () => {
+  marker.setLatLng({lat: Center.LAT, lng: Center.LNG});
+  address.value = `${Center.LAT}, ${Center.LNG}`;
+}
+
 //Функция добавления меток объявлений
 const renderPopups = (popups) => {
   const pinIcon = L.icon({
@@ -63,7 +69,7 @@ const renderPopups = (popups) => {
     iconSize: [40, 40],
     iconAnchor: [20, 40],
   });
-  
+
   popups.forEach ((popup) => {
     const marker = L.marker({
       lat: popup.location.lat,
@@ -83,4 +89,4 @@ const renderPopups = (popups) => {
   })
 }
 
-export { renderPopups };
+export { renderPopups, moveMarkerCenter };

@@ -1,7 +1,7 @@
 import { getRandomInteger, getRandom, getRandomArrayElement, getRandomArrayFromArray } from './util.js';
 
 const NUMBER_AUTHORS = 10;
-const NUMBER_ADVERTISEMENT = 10;
+const NUMBER_POPUPS = 10;
 const Price = {
   MIN: 1,
   MAX: 1000000,
@@ -35,8 +35,8 @@ const descriptions = ['Тараканов нет.', 'Шампанское каж
 const photosValues = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 
 //Функция создания случайного объявления
-const createAdvertisement = () => {
-  let advertisement = {
+const createPopup = () => {
+  let popup = {
     author: getRandomArrayElement(authors),
 
     offer: {
@@ -58,14 +58,13 @@ const createAdvertisement = () => {
     },
   }
 
-  // advertisement.offer.address = advertisement.location.x + ', ' + advertisement.location.y;
-  advertisement.offer.address = `${advertisement.location.x}, ${advertisement.location.y}`;
+  popup.offer.address = `${popup.location.x}, ${popup.location.y}`;
 
-  return advertisement;
+  return popup;
 
 };
 
 //Функция создания массива объявлений
-const createAdvertisements = () => new Array(NUMBER_ADVERTISEMENT).fill(null).map(() => createAdvertisement());
+const createPopups = () => new Array(NUMBER_POPUPS).fill(null).map(() => createPopup());
 
-export { createAdvertisements };
+export { createPopups };
