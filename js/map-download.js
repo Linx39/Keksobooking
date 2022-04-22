@@ -1,6 +1,6 @@
 /* global L:readonly */
 
-import { formDisabled, formEnabled } from './util.js';
+import { formDisabled, formEnabled } from './form-function.js'
 import { createCostumPopup } from './popup.js';
 
 const Center = {

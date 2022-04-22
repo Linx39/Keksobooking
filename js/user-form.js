@@ -1,6 +1,6 @@
-import { showAlert } from './util.js';
 import { sendData } from './api.js';
 import { moveMarkerCenter } from './map-download.js';
+import { getMessage } from './form-function.js';
 
 const PRICE_MIN = {
   'bungalow': 0,
@@ -131,7 +131,7 @@ const setUserFormSubmit = (onSuccess) => {
 
     sendData (
       () => onSuccess(),
-      (error) => showAlert(`О-оох... ${error}`),
+      () => getMessage(false),
       new FormData(evt.target),
     );
   })
