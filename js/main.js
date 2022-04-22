@@ -12,7 +12,7 @@ getData(
   (notice) => {
     renderPopups(notice.slice(0, NOTICE_COUNT));
   },
-  (error) => showAlert(`Упс... ${error}`),
+  (error) => showAlert(`Упс... Ошибка загрузки данных... ${error}`),
 );
 
-setUserFormSubmit(() => {getMessage(true)});
+setUserFormSubmit(() => getMessage(true));

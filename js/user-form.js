@@ -23,6 +23,7 @@ const Room_Capacities = {
   100: [0],
 }
 
+const mapFilters = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
 const title = adForm.querySelector('#title');
 const type = adForm.querySelector('#type');
@@ -115,6 +116,7 @@ roomNumber.addEventListener('change', () => {
 
 //Функции очистки формы
 const formReset = () => {
+  mapFilters.reset();
   adForm.reset();
   moveMarkerCenter();
 }

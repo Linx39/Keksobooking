@@ -4,55 +4,48 @@ import { formReset } from './user-form.js';
 const ALERT_SHOW_TIME = 5000;
 
 const adForm = document.querySelector('.ad-form');
+const mapFilters = document.querySelector('.map__filters');
 
-//Функция деактивации формы и блокирование полей
-const formDisabled = () => {
-  const elementDisabled = (form, field) => {
-    const formFields = form.querySelectorAll(field);
+//Функция блокирования/разблокирования полей формы
+const disabledEnebledElement = (form, field, isEnabled) => {
+  const formFields = form.querySelectorAll(field);
 
-    for (let element of formFields) {
+  for (let element of formFields) {
+    if (isEnabled) {
+      element.removeAttribute('disabled');
+    } else {
       element.setAttribute('disabled', 'disabled');
     }
   }
-  
+}
+
+//Функция деактивации формы и блокирования полей
+const disabledForm = () => {
   adForm.classList.add('ad-form--disabled');
-
-  elementDisabled(adForm, 'fieldset')
-
-  const mapFilters = document.querySelector('.map__filters');
+  disabledEnebledElement(adForm, 'fieldset', false)
+  
   mapFilters.classList.add('map__filters--disabled');
-
-  elementDisabled(mapFilters, 'fieldset');
-  elementDisabled(mapFilters, 'select');
+  disabledEnebledElement(mapFilters, 'fieldset', false);
+  disabledEnebledElement(mapFilters, 'select', false);
 }
 
 //Функция активации формы и разблокирования полей
-const formEnabled = () => {
-  const elementEnabled = (form, field) => {
-    const formFields = form.querySelectorAll(field);
-
-    for (let element of formFields) {
-      element.removeAttribute('disabled');
-    }
-  }
-
+const enabledForm = () => {
   adForm.classList.remove('ad-form--disabled');
-
-  elementEnabled(adForm, 'fieldset')
-
-  const mapFilters = document.querySelector('.map__filters');
+  disabledEnebledElement(adForm, 'fieldset', true)
+  
   mapFilters.classList.remove('map__filters--disabled');
-
-  elementEnabled(mapFilters, 'fieldset');
-  elementEnabled(mapFilters, 'select');
+  disabledEnebledElement(mapFilters, 'fieldset', true);
+  disabledEnebledElement(mapFilters, 'select', true);
 }
 
 //Функция создания блока с сообщением
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
+  alertContainer.style.display = 'block';
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
-  // alertContainer.style.width = '50%';
+  // alertContainer.style.width = '100%';
   alertContainer.style.left = 0;
   alertContainer.style.top = 0;
   alertContainer.style.right = 0;
@@ -98,10 +91,10 @@ const getMessage = (isSuccess) => {
     if (isSuccess) {
       formReset();
     }
-  }
+  };
 
   document.addEventListener('keydown', onMessageEscKeydown);
   messageSuccess.addEventListener('click', onMessageClick);
 };
 
-export { formDisabled, formEnabled, showAlert, getMessage };
+export { disabledForm, enabledForm, showAlert, getMessage };

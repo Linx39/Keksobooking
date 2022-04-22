@@ -1,22 +1,21 @@
 /* global L:readonly */
 
-import { formDisabled, formEnabled } from './form-function.js'
+import { disabledForm, enabledForm } from './form-function.js'
 import { createCostumPopup } from './popup.js';
 
 const Center = {
   LAT: 35.68950,
   LNG: 139.69171,
-}
+};
 
 const address = document.querySelector('[name="address"]');
 
 //Деактивация страницы до загрузки карты
-formDisabled();
+disabledForm();
 
 //Загрузка карты
 const map = L.map('map-canvas')
-  .on('load', () => {
-    formEnabled();
+  .on('load', () => {    
     address.value = `${Center.LAT}, ${Center.LNG}`;
   })
   .setView({
@@ -30,6 +29,11 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
+
+//Активация страницы после загрузки карты
+if (map) {
+  enabledForm();
+}
 
 //Добавление главной метки
 const mainPinIcon = L.icon({

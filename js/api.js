@@ -8,7 +8,6 @@ const getData = (onSuccess, onError) => {
     .then((json) => {
       onSuccess(json);
     })
-    // .catch ((error) => {showAlert(`Упс... ${error}`)})
     .catch((error) => {
       onError(error);
     });
@@ -23,8 +22,8 @@ const sendData = (onSuccess, onError, body) => {
     })
     .then (checkStatus)
     .then (() => onSuccess())
-    .catch((error) => {
-      onError(error);
+    .catch(() => {
+      onError();
     });
 };
 
