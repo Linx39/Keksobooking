@@ -2,6 +2,9 @@
 
 import { disabledForm, enabledForm } from './form-function.js'
 import { createCostumPopup } from './popup.js';
+import { formFilter } from './user-form.js';
+
+const NOTICE_COUNT = 10;
 
 const Center = {
   LAT: 35.68950,
@@ -15,7 +18,7 @@ disabledForm();
 
 //Загрузка карты
 const map = L.map('map-canvas')
-  .on('load', () => {    
+  .on('load', () => {
     address.value = `${Center.LAT}, ${Center.LNG}`;
   })
   .setView({
@@ -74,23 +77,35 @@ const renderPopups = (popups) => {
     iconAnchor: [20, 40],
   });
 
-  popups.forEach ((popup) => {
-    const marker = L.marker({
-      lat: popup.location.lat,
-      lng: popup.location.lng,
-    },
-    {
-      icon: pinIcon,
-    });
+  const markerPane = document.querySelector('.leaflet-marker-pane');           //фигня
+  while (markerPane.children.length > 1) {
+    markerPane.removeChild(markerPane.lastChild);
+  }
+  const popupPane = document.querySelector('.leaflet-popup-pane');              //фигня
+  while (popupPane.firstChild) {
+    popupPane.removeChild(popupPane.firstChild);
+  }
 
-    marker
-      .addTo(map)
-      .bindPopup(
-        createCostumPopup(popup),
-        {
-          keepInView: true,
-        });
-  })
+  popups
+    .filter (formFilter)
+    .slice(0, NOTICE_COUNT)
+    .forEach ((popup) => {
+      const marker = L.marker({
+        lat: popup.location.lat,
+        lng: popup.location.lng,
+      },
+      {
+        icon: pinIcon,
+      });
+
+      marker
+        .addTo(map)
+        .bindPopup(
+          createCostumPopup(popup),
+          {
+            keepInView: true,
+          });
+    })
 }
 
 export { renderPopups, moveMarkerCenter };

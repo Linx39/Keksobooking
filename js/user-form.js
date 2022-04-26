@@ -2,6 +2,9 @@ import { sendData } from './api.js';
 import { moveMarkerCenter } from './map-download.js';
 import { getMessage } from './form-function.js';
 
+const Default = {
+  HOUSING_TYPE: 'any',
+}
 const PRICE_MIN = {
   'bungalow': 0,
   'flat': 1000,
@@ -23,17 +26,18 @@ const Room_Capacities = {
   100: [0],
 }
 
-const mapFilters = document.querySelector('.map__filters');
 const adForm = document.querySelector('.ad-form');
 const title = adForm.querySelector('#title');
 const type = adForm.querySelector('#type');
 const price = adForm.querySelector('#price');
-const adress = adForm.querySelector('[name="address"]');
+const address = adForm.querySelector('[name="address"]');
 const timein = adForm.querySelector('#timein');
 const timeout = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
-const buttonReset = adForm.querySelector('.ad-form__reset')
+const buttonReset = adForm.querySelector('.ad-form__reset');
+const mapFilters = document.querySelector('.map__filters');
+const housingType = mapFilters.querySelector('#housing-type');
 
 title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';                     //для проверки
 price.value = '1500';                                                             //для проверки
@@ -54,7 +58,7 @@ title.addEventListener('input', () => {
 });
 
 //Запрет редактирования поля "адрес"
-adress.setAttribute('readonly', 'readonly');
+address.setAttribute('readonly', 'readonly');
 
 //Установка минимальных значений поля "цена" в зависимости от выбора поля "тип жилья"
 type.addEventListener('change', () => {
@@ -114,6 +118,25 @@ roomNumber.addEventListener('change', () => {
   disabledCapasity();
 });
 
+//Функция фильтра по типу жилья
+const housingTypeChange = (cb) =>{
+  housingType.addEventListener('change', () => {
+    housingType.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
+    housingType.querySelector(`[value="${housingType.value}"]`).setAttribute('selected', '');
+    cb();
+  })
+}
+
+const formFilter = (popup) => {
+  const housingTypeFilter = housingType.value;
+  if (housingTypeFilter === Default.HOUSING_TYPE) {
+    return true;
+  }
+  if (popup.offer.type === housingTypeFilter) {
+    return true;
+  }
+}
+
 //Функции очистки формы
 const formReset = () => {
   mapFilters.reset();
@@ -139,4 +162,4 @@ const setUserFormSubmit = (onSuccess) => {
   })
 };
 
-export { setUserFormSubmit, formReset };
+export { setUserFormSubmit, formReset, formFilter, housingTypeChange };

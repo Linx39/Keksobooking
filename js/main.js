@@ -2,15 +2,13 @@ import './map-download.js';
 import './user-form.js';
 import { renderPopups } from './map-download.js';
 import { getData } from './api.js';
-import { setUserFormSubmit } from './user-form.js';
+import { setUserFormSubmit, housingTypeChange } from './user-form.js';
 import { showAlert, getMessage } from './form-function.js';
-
-
-const NOTICE_COUNT = 10;
 
 getData(
   (notice) => {
-    renderPopups(notice.slice(0, NOTICE_COUNT));
+    renderPopups(notice);
+    housingTypeChange(() => renderPopups(notice))
   },
   (error) => showAlert(`Упс... Ошибка загрузки данных... ${error}`),
 );
