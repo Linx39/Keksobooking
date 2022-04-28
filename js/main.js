@@ -2,6 +2,7 @@
 
 import './map-download.js';
 import './user-form.js';
+import './image-download.js';
 import { renderPopups } from './map-download.js';
 import { getData } from './api.js';
 import { setUserFormSubmit, changeHousingType, changeHousingPrice, changeHousingRooms, changeHousingGuests, changeFilterWifi, changeFilterDishwasher, changeFilterParking, changeFilterWasher, changeFilterElevator, changeFilterConditioner } from './user-form.js';

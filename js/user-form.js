@@ -7,28 +7,28 @@ const Default = {
   HOUSING_PRICE: 'any',
   HOUSING_ROOMS: 'any',
   HOUSING_GUEST: 'any',
-}
+};
 const PRICE_MIN = {
   'bungalow': 0,
   'flat': 1000,
   'house': 5000,
   'palace': 10000,
-}
+};
 const PRICE_MAX = 1000000;
 const Price_Rank = {
   'low': 10000,
   'middle': 50000,
-}
+};
 const Title_Length = {
   MIN: 30,
   MAX: 100,
-}
+};
 const Room_Capacities = {
   1: [1],
   2: [1, 2],
   3: [1, 2, 3],
   100: [0],
-}
+};
 
 const adForm = document.querySelector('.ad-form');
 const title = adForm.querySelector('#title');
@@ -233,7 +233,7 @@ const filterForm = (popup) => {
     isTrueHousingType = true;
   }
 
-  let priceValue;  
+  let priceValue;
   if (popup.offer.price < Price_Rank.low) {
     priceValue = 'low';
   }
@@ -243,20 +243,20 @@ const filterForm = (popup) => {
   if (popup.offer.price > Price_Rank.middle) {
     priceValue = 'high';
   }
-  
+
   let isTrueHousingPrice = false;
-  if (Default.HOUSING_PRICE === housingPrice.value || priceValue === housingPrice.value) {    
+  if (Default.HOUSING_PRICE === housingPrice.value || priceValue === housingPrice.value) {
     isTrueHousingPrice = true;
   }
 
   let isTrueHousingRooms = false;
   if (Default.HOUSING_ROOMS === housingRooms.value || String(popup.offer.rooms) === housingRooms.value) {
-    isTrueHousingRooms = true;    
+    isTrueHousingRooms = true;
   }
 
   let isTrueHousingGuests = false;
   if (Default.HOUSING_GUEST === housingGuests.value || String(popup.offer.guests) === housingGuests.value) {
-    isTrueHousingGuests = true;    
+    isTrueHousingGuests = true;
   }
 
   const getIsFilter = (filterElement) => {
@@ -280,7 +280,7 @@ const filterForm = (popup) => {
   const isFilterWasher = getIsFilter(filterWasher);
   const isFilterElevator = getIsFilter(filterElevator);
   const isFilterConditioner = getIsFilter(filterConditioner);
-     
+
   if (isTrueHousingType & isTrueHousingPrice & isTrueHousingRooms & isTrueHousingGuests & isFilterWifi & isFilterDishwasher & isFilterParking & isFilterWasher & isFilterElevator & isFilterConditioner) {
     return true;
   }
@@ -289,7 +289,7 @@ const filterForm = (popup) => {
 //Функции очистки формы
 const resetForm = () => {
   mapFilters.reset();                                       //теперь это не работает(после добавления фильтров)
-  adForm.reset();
+  adForm.reset();                                            // не очищает изображения
   moveMarkerCenter();
 };
 
