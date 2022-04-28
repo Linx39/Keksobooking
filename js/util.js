@@ -27,7 +27,7 @@ const getRandom = (min, max, numberSimbol) => {
 //Функция поиска случайного элемента в массиве
 const getRandomArrayElement = (elements) => {
   return(elements[getRandomInteger(0, elements.length-1)]);
-}
+};
 
 //Функция создания массива случайной длины со случайными неповторяющимися значениями из базового массива
 const getRandomArrayFromArray = (arrayValues) => {

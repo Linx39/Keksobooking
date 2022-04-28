@@ -1,8 +1,13 @@
 import { checkStatus } from './util.js';
 
+const Urls = {
+  GET: 'https://23.javascript.pages.academy/keksobooking/data',
+  SEND: 'https://23.javascript.pages.academy/keksobooking',
+}
+
 //Получение данных с сервера
 const getData = (onSuccess, onError) => {
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
+  fetch(Urls.GET)
     .then(checkStatus)
     .then((response) => response.json())
     .then((json) => {
@@ -15,7 +20,7 @@ const getData = (onSuccess, onError) => {
 
 const sendData = (onSuccess, onError, body) => {
   fetch(
-    'https://23.javascript.pages.academy/keksobooking',
+    Urls.SEND,
     {
       method: 'POST',
       body: body,

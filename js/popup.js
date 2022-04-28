@@ -56,4 +56,4 @@ const createCostumPopup = (card) => {
   return cardElement;
 }
 
-export { createCostumPopup }
+export { createCostumPopup };

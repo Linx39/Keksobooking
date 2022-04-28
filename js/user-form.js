@@ -4,6 +4,9 @@ import { getMessage } from './form-function.js';
 
 const Default = {
   HOUSING_TYPE: 'any',
+  HOUSING_PRICE: 'any',
+  HOUSING_ROOMS: 'any',
+  HOUSING_GUEST: 'any',
 }
 const PRICE_MIN = {
   'bungalow': 0,
@@ -11,14 +14,15 @@ const PRICE_MIN = {
   'house': 5000,
   'palace': 10000,
 }
-
 const PRICE_MAX = 1000000;
-
+const Price_Rank = {
+  'low': 10000,
+  'middle': 50000,
+}
 const Title_Length = {
   MIN: 30,
   MAX: 100,
 }
-
 const Room_Capacities = {
   1: [1],
   2: [1, 2],
@@ -36,8 +40,19 @@ const timeout = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const buttonReset = adForm.querySelector('.ad-form__reset');
+
 const mapFilters = document.querySelector('.map__filters');
 const housingType = mapFilters.querySelector('#housing-type');
+const housingPrice = mapFilters.querySelector('#housing-price');
+const housingRooms = mapFilters.querySelector('#housing-rooms');
+const housingGuests = mapFilters.querySelector('#housing-guests');
+const filterWifi = mapFilters.querySelector('#filter-wifi');
+const filterDishwasher = mapFilters.querySelector('#filter-dishwasher');
+const filterParking = mapFilters.querySelector('#filter-parking');
+const filterWasher = mapFilters.querySelector('#filter-washer');
+const filterElevator = mapFilters.querySelector('#filter-elevator');
+const filterConditioner = mapFilters.querySelector('#filter-conditioner');
+
 
 title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';                     //для проверки
 price.value = '1500';                                                             //для проверки
@@ -118,36 +133,170 @@ roomNumber.addEventListener('change', () => {
   disabledCapasity();
 });
 
-//Функция фильтра по типу жилья
-const housingTypeChange = (cb) =>{
+//Функции, отслеживающие изменения фильтров
+const changeHousingType = (cb) => {
   housingType.addEventListener('change', () => {
     housingType.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
     housingType.querySelector(`[value="${housingType.value}"]`).setAttribute('selected', '');
     cb();
   })
+};
+
+const changeHousingPrice = (cb) => {
+  housingPrice.addEventListener('change', () => {
+    housingPrice.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
+    housingPrice.querySelector(`[value="${housingPrice.value}"]`).setAttribute('selected', '');
+    cb();
+  })
+};
+
+const changeHousingRooms = (cb) => {
+  housingRooms.addEventListener('change', () => {
+    housingRooms.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
+    housingRooms.querySelector(`[value="${housingRooms.value}"]`).setAttribute('selected', '');
+    cb();
+  })
 }
 
-const formFilter = (popup) => {
-  const housingTypeFilter = housingType.value;
-  if (housingTypeFilter === Default.HOUSING_TYPE) {
+const changeHousingGuests = (cb) => {
+  housingGuests.addEventListener('change', () => {
+    housingGuests.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
+    housingGuests.querySelector(`[value="${housingGuests.value}"]`).setAttribute('selected', '');
+    cb();
+  })
+};
+
+const changeFilterWifi = (cb) => {
+  filterWifi.addEventListener('click', () => {
+    filterWifi.removeAttribute ('checked');
+    if (filterWifi.checked) {
+      filterWifi.setAttribute('checked', '')
+    }
+    cb();
+  })
+};
+
+const changeFilterDishwasher = (cb) => {
+  filterDishwasher.addEventListener('click', () => {
+    filterDishwasher.removeAttribute ('checked');
+    if (filterDishwasher.checked) {
+      filterDishwasher.setAttribute('checked', '')
+    }
+    cb();
+  })
+};
+
+const changeFilterParking = (cb) => {
+  filterParking.addEventListener('click', () => {
+    filterParking.removeAttribute ('checked');
+    if (filterParking.checked) {
+      filterParking.setAttribute('checked', '')
+    }
+    cb();
+  })
+};
+
+const changeFilterWasher = (cb) => {
+  filterWasher.addEventListener('click', () => {
+    filterWasher.removeAttribute ('checked');
+    if (filterWasher.checked) {
+      filterWasher.setAttribute('checked', '')
+    }
+    cb();
+  })
+};
+
+const changeFilterElevator = (cb) => {
+  filterElevator.addEventListener('click', () => {
+    filterElevator.removeAttribute ('checked');
+    if (filterElevator.checked) {
+      filterElevator.setAttribute('checked', '')
+    }
+    cb();
+  })
+};
+
+const changeFilterConditioner = (cb) => {
+  filterConditioner.addEventListener('click', () => {
+    filterConditioner.removeAttribute ('checked');
+    if (filterConditioner.checked) {
+      filterConditioner.setAttribute('checked', '')
+    }
+    cb();
+  })
+};
+
+//Функция фильтра попапов
+const filterForm = (popup) => {
+  let isTrueHousingType = false;
+  if (Default.HOUSING_TYPE === housingType.value || popup.offer.type === housingType.value) {
+    isTrueHousingType = true;
+  }
+
+  let priceValue;  
+  if (popup.offer.price < Price_Rank.low) {
+    priceValue = 'low';
+  }
+  if (popup.offer.price >= Price_Rank.low & popup.offer.price <= Price_Rank.middle) {
+    priceValue = 'middle';
+  }
+  if (popup.offer.price > Price_Rank.middle) {
+    priceValue = 'high';
+  }
+  
+  let isTrueHousingPrice = false;
+  if (Default.HOUSING_PRICE === housingPrice.value || priceValue === housingPrice.value) {    
+    isTrueHousingPrice = true;
+  }
+
+  let isTrueHousingRooms = false;
+  if (Default.HOUSING_ROOMS === housingRooms.value || String(popup.offer.rooms) === housingRooms.value) {
+    isTrueHousingRooms = true;    
+  }
+
+  let isTrueHousingGuests = false;
+  if (Default.HOUSING_GUEST === housingGuests.value || String(popup.offer.guests) === housingGuests.value) {
+    isTrueHousingGuests = true;    
+  }
+
+  const getIsFilter = (filterElement) => {
+    let isFilter = false;
+
+    let isFilterElement = true;
+    if (Array.isArray(popup.offer.features)) {
+      isFilterElement = popup.offer.features.some( element => {return(element === filterElement.value)} );
+    }
+
+    if (filterElement.checked & isFilterElement || !filterElement.checked) {
+      isFilter = true;
+    }
+
+    return isFilter;
+  };
+
+  const isFilterWifi = getIsFilter(filterWifi);
+  const isFilterDishwasher = getIsFilter(filterDishwasher);
+  const isFilterParking = getIsFilter(filterParking);
+  const isFilterWasher = getIsFilter(filterWasher);
+  const isFilterElevator = getIsFilter(filterElevator);
+  const isFilterConditioner = getIsFilter(filterConditioner);
+     
+  if (isTrueHousingType & isTrueHousingPrice & isTrueHousingRooms & isTrueHousingGuests & isFilterWifi & isFilterDishwasher & isFilterParking & isFilterWasher & isFilterElevator & isFilterConditioner) {
     return true;
   }
-  if (popup.offer.type === housingTypeFilter) {
-    return true;
-  }
-}
+};
 
 //Функции очистки формы
-const formReset = () => {
-  mapFilters.reset();
+const resetForm = () => {
+  mapFilters.reset();                                       //теперь это не работает(после добавления фильтров)
   adForm.reset();
   moveMarkerCenter();
-}
+};
 
 buttonReset.addEventListener('click', (evt) => {
   evt.preventDefault();
-  formReset();
-})
+  resetForm();
+});
 
 //Функция отправки формы
 const setUserFormSubmit = (onSuccess) => {
@@ -159,7 +308,7 @@ const setUserFormSubmit = (onSuccess) => {
       () => getMessage(false),
       new FormData(evt.target),
     );
-  })
+  });
 };
 
-export { setUserFormSubmit, formReset, formFilter, housingTypeChange };
+export { setUserFormSubmit, resetForm, filterForm, changeHousingType, changeHousingPrice, changeHousingRooms, changeHousingGuests, changeFilterWifi, changeFilterDishwasher, changeFilterParking, changeFilterWasher, changeFilterElevator, changeFilterConditioner };

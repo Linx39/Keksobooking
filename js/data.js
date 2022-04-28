@@ -23,7 +23,7 @@ const authors = new Array(NUMBER_AUTHORS).fill(null).map((curentValue, i) => {
   return {
     avatar: 'img/avatars/user' + imageIndex + '.png',
   }
-})
+});
 
 //Массивы значений для создания объекта offer
 const titles = ['Суперпредложение!', 'Роскошные аппартаменты', 'Скидка только сегодня!', 'Дёшево и сердито', 'Скромно, но с вкусом']
@@ -56,7 +56,7 @@ const createPopup = () => {
       x: getRandom(Lat.MIN, Lat.MAX, 5),
       y: getRandom(Lng.MIN, Lng.MAX, 5),
     },
-  }
+  };
 
   popup.offer.address = `${popup.location.x}, ${popup.location.y}`;
 

@@ -1,8 +1,7 @@
 import { isEscEvent } from './util.js';
-import { formReset } from './user-form.js';
+import { resetForm } from './user-form.js';
 
 const ALERT_SHOW_TIME = 5000;
-
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 
@@ -17,7 +16,7 @@ const disabledEnebledElement = (form, field, isEnabled) => {
       element.setAttribute('disabled', 'disabled');
     }
   }
-}
+};
 
 //Функция деактивации формы и блокирования полей
 const disabledForm = () => {
@@ -27,17 +26,19 @@ const disabledForm = () => {
   mapFilters.classList.add('map__filters--disabled');
   disabledEnebledElement(mapFilters, 'fieldset', false);
   disabledEnebledElement(mapFilters, 'select', false);
-}
+};
 
-//Функция активации формы и разблокирования полей
-const enabledForm = () => {
+//Функции активации форм и разблокирования полей
+const enabledFormAd = () => {
   adForm.classList.remove('ad-form--disabled');
   disabledEnebledElement(adForm, 'fieldset', true)
-  
+};
+
+const enabledFormFilter = () => {
   mapFilters.classList.remove('map__filters--disabled');
   disabledEnebledElement(mapFilters, 'fieldset', true);
   disabledEnebledElement(mapFilters, 'select', true);
-}
+};
 
 //Функция создания блока с сообщением
 const showAlert = (message) => {
@@ -45,7 +46,6 @@ const showAlert = (message) => {
   alertContainer.style.display = 'block';
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
-  // alertContainer.style.width = '100%';
   alertContainer.style.left = 0;
   alertContainer.style.top = 0;
   alertContainer.style.right = 0;
@@ -81,7 +81,7 @@ const getMessage = (isSuccess) => {
       evt.preventDefault();
       messageSuccess.classList.add('hidden');
       if (isSuccess) {
-        formReset();
+        resetForm();
       }
     }
   };
@@ -89,7 +89,7 @@ const getMessage = (isSuccess) => {
   const onMessageClick = () => {
     messageSuccess.classList.add('hidden');
     if (isSuccess) {
-      formReset();
+      resetForm();
     }
   };
 
@@ -97,4 +97,4 @@ const getMessage = (isSuccess) => {
   messageSuccess.addEventListener('click', onMessageClick);
 };
 
-export { disabledForm, enabledForm, showAlert, getMessage };
+export { disabledForm, enabledFormAd, enabledFormFilter, showAlert, getMessage };
