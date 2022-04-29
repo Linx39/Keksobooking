@@ -22,7 +22,7 @@ const disabledEnebledElement = (form, field, isEnabled) => {
 const disabledForm = () => {
   adForm.classList.add('ad-form--disabled');
   disabledEnebledElement(adForm, 'fieldset', false)
-  
+
   mapFilters.classList.add('map__filters--disabled');
   disabledEnebledElement(mapFilters, 'fieldset', false);
   disabledEnebledElement(mapFilters, 'select', false);
@@ -56,7 +56,6 @@ const showAlert = (message) => {
   alertContainer.style.borderColor = 'red';
   alertContainer.style.borderWidth = '5px';
   alertContainer.style.borderStyle = 'dashed';
-
   alertContainer.textContent = message;
 
   document.body.append(alertContainer);
@@ -67,7 +66,7 @@ const showAlert = (message) => {
 };
 
 const getMessage = (isSuccess) => {
-  let result = 'error';  
+  let result = 'error';
   if (isSuccess) {
     result = 'success';
   }

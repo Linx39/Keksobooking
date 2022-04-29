@@ -1,6 +1,7 @@
-import { sendData } from './api.js';
-import { moveMarkerCenter } from './map-download.js';
-import { getMessage } from './form-function.js';
+import { getData, sendData } from './api.js';
+import { renderPopups, moveMarkerCenter } from './map.js';
+import { getMessage, showAlert } from './form-function.js';
+import { clearImage } from './image-download.js';
 
 const Default = {
   HOUSING_TYPE: 'any',
@@ -135,95 +136,43 @@ roomNumber.addEventListener('change', () => {
 
 //Функции, отслеживающие изменения фильтров
 const changeHousingType = (cb) => {
-  housingType.addEventListener('change', () => {
-    housingType.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
-    housingType.querySelector(`[value="${housingType.value}"]`).setAttribute('selected', '');
-    cb();
-  })
+  housingType.addEventListener('change', () => cb())
 };
 
 const changeHousingPrice = (cb) => {
-  housingPrice.addEventListener('change', () => {
-    housingPrice.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
-    housingPrice.querySelector(`[value="${housingPrice.value}"]`).setAttribute('selected', '');
-    cb();
-  })
+  housingPrice.addEventListener('change', () => cb())
 };
 
 const changeHousingRooms = (cb) => {
-  housingRooms.addEventListener('change', () => {
-    housingRooms.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
-    housingRooms.querySelector(`[value="${housingRooms.value}"]`).setAttribute('selected', '');
-    cb();
-  })
-}
+  housingRooms.addEventListener('change', () => cb())
+};
 
 const changeHousingGuests = (cb) => {
-  housingGuests.addEventListener('change', () => {
-    housingGuests.querySelectorAll('option').forEach (option => option.removeAttribute('selected'));
-    housingGuests.querySelector(`[value="${housingGuests.value}"]`).setAttribute('selected', '');
-    cb();
-  })
+  housingGuests.addEventListener('change', () => cb())
 };
 
 const changeFilterWifi = (cb) => {
-  filterWifi.addEventListener('click', () => {
-    filterWifi.removeAttribute ('checked');
-    if (filterWifi.checked) {
-      filterWifi.setAttribute('checked', '')
-    }
-    cb();
-  })
+  filterWifi.addEventListener('click', () => cb())
 };
 
 const changeFilterDishwasher = (cb) => {
-  filterDishwasher.addEventListener('click', () => {
-    filterDishwasher.removeAttribute ('checked');
-    if (filterDishwasher.checked) {
-      filterDishwasher.setAttribute('checked', '')
-    }
-    cb();
-  })
+  filterDishwasher.addEventListener('click', () => cb())
 };
 
 const changeFilterParking = (cb) => {
-  filterParking.addEventListener('click', () => {
-    filterParking.removeAttribute ('checked');
-    if (filterParking.checked) {
-      filterParking.setAttribute('checked', '')
-    }
-    cb();
-  })
+  filterParking.addEventListener('click', () => cb())
 };
 
 const changeFilterWasher = (cb) => {
-  filterWasher.addEventListener('click', () => {
-    filterWasher.removeAttribute ('checked');
-    if (filterWasher.checked) {
-      filterWasher.setAttribute('checked', '')
-    }
-    cb();
-  })
+  filterWasher.addEventListener('click', () => cb())
 };
 
 const changeFilterElevator = (cb) => {
-  filterElevator.addEventListener('click', () => {
-    filterElevator.removeAttribute ('checked');
-    if (filterElevator.checked) {
-      filterElevator.setAttribute('checked', '')
-    }
-    cb();
-  })
+  filterElevator.addEventListener('click', () => cb())
 };
 
 const changeFilterConditioner = (cb) => {
-  filterConditioner.addEventListener('click', () => {
-    filterConditioner.removeAttribute ('checked');
-    if (filterConditioner.checked) {
-      filterConditioner.setAttribute('checked', '')
-    }
-    cb();
-  })
+  filterConditioner.addEventListener('click', () => cb())
 };
 
 //Функция фильтра попапов
@@ -288,8 +237,15 @@ const filterForm = (popup) => {
 
 //Функции очистки формы
 const resetForm = () => {
-  mapFilters.reset();                                       //теперь это не работает(после добавления фильтров)
-  adForm.reset();                                            // не очищает изображения
+  mapFilters.reset();
+  getData((notice) => {
+    renderPopups(notice);
+  },
+  (error) => showAlert(`Упс... Ошибка загрузки данных... ${error}`),
+  );
+  adForm.reset();
+  clearImage();
+  disabledCapasity();
   moveMarkerCenter();
 };
 

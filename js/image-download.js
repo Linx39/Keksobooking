@@ -22,5 +22,13 @@ const downloadImage = (fileChooser, preview) => {
   });
 };
 
+const clearImage = () => {
+  previewAvatar.src = '';
+  previewHousing.src = '';
+}
+
 downloadImage(fileChooserAvatar, previewAvatar);
+
 downloadImage(fileChooserHousing, previewHousing);
+
+export { clearImage }
