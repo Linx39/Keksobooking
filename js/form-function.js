@@ -6,7 +6,7 @@ const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
 
 //Функция блокирования/разблокирования полей формы
-const disabledEnebledElement = (form, field, isEnabled) => {
+const disableEnableElement = (form, field, isEnabled) => {
   const formFields = form.querySelectorAll(field);
 
   for (let element of formFields) {
@@ -19,31 +19,30 @@ const disabledEnebledElement = (form, field, isEnabled) => {
 };
 
 //Функция деактивации формы и блокирования полей
-const disabledForm = () => {
+const disableForm = () => {
   adForm.classList.add('ad-form--disabled');
-  disabledEnebledElement(adForm, 'fieldset', false)
+  disableEnableElement(adForm, 'fieldset', false)
 
   mapFilters.classList.add('map__filters--disabled');
-  disabledEnebledElement(mapFilters, 'fieldset', false);
-  disabledEnebledElement(mapFilters, 'select', false);
+  disableEnableElement(mapFilters, 'fieldset', false);
+  disableEnableElement(mapFilters, 'select', false);
 };
 
 //Функции активации форм и разблокирования полей
-const enabledFormAd = () => {
+const enableFormAd = () => {
   adForm.classList.remove('ad-form--disabled');
-  disabledEnebledElement(adForm, 'fieldset', true)
+  disableEnableElement(adForm, 'fieldset', true)
 };
 
-const enabledFormFilter = () => {
+const enableFormFilter = () => {
   mapFilters.classList.remove('map__filters--disabled');
-  disabledEnebledElement(mapFilters, 'fieldset', true);
-  disabledEnebledElement(mapFilters, 'select', true);
+  disableEnableElement(mapFilters, 'fieldset', true);
+  disableEnableElement(mapFilters, 'select', true);
 };
 
 //Функция создания блока с сообщением
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
-  alertContainer.style.display = 'block';
   alertContainer.style.zIndex = 100;
   alertContainer.style.position = 'absolute';
   alertContainer.style.left = 0;
@@ -71,29 +70,33 @@ const getMessage = (isSuccess) => {
     result = 'success';
   }
 
-  const templateSuccess = document.querySelector(`#${result}`).content.querySelector(`.${result}`);
-  const messageSuccess = templateSuccess.cloneNode(true);
-  document.body.append(messageSuccess);
+  const messageSubmit = document.querySelector(`#${result}`).content.querySelector(`.${result}`).cloneNode(true);
 
-  const onMessageEscKeydown = (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      messageSuccess.classList.add('hidden');
-      if (isSuccess) {
-        resetForm();
-      }
-    }
-  };
+  document.body.append(messageSubmit);
 
-  const onMessageClick = () => {
-    messageSuccess.classList.add('hidden');
+  let onMessageEscKeydown = null;
+
+  const closeMessageSubmit = () => {
+    messageSubmit.classList.add('hidden');
+    document.removeEventListener('keydown', onMessageEscKeydown);
     if (isSuccess) {
       resetForm();
     }
   };
 
+  onMessageEscKeydown = (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      closeMessageSubmit();
+    }
+  };
+
+  const onMessageClick = () => {
+    closeMessageSubmit();
+  };
+
   document.addEventListener('keydown', onMessageEscKeydown);
-  messageSuccess.addEventListener('click', onMessageClick);
+  messageSubmit.addEventListener('click', onMessageClick);
 };
 
-export { disabledForm, enabledFormAd, enabledFormFilter, showAlert, getMessage };
+export { disableForm, enableFormAd, enableFormFilter, showAlert, getMessage };

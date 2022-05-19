@@ -9,21 +9,26 @@ const Default = {
   HOUSING_ROOMS: 'any',
   HOUSING_GUEST: 'any',
 };
+
 const PRICE_MIN = {
   'bungalow': 0,
   'flat': 1000,
   'house': 5000,
   'palace': 10000,
 };
+
 const PRICE_MAX = 1000000;
+
 const Price_Rank = {
   'low': 10000,
   'middle': 50000,
 };
+
 const Title_Length = {
   MIN: 30,
   MAX: 100,
 };
+
 const Room_Capacities = {
   1: [1],
   2: [1, 2],
@@ -111,27 +116,27 @@ timeout.addEventListener('change', () => {
 });
 
 //Синхронизация полей "количество комнат"/"количество гостей"
-const disabledCapasity = () => {
+const disableCapasity = () => {
   const roomCapacities = Room_Capacities[roomNumber.value];
-  const capacityValues = capacity.querySelectorAll('[value]');
+  const valueCapacities = capacity.querySelectorAll('[value]');
 
-  capacityValues.forEach ((capacityValue) => {
-    capacityValue.setAttribute('disabled', 'disabled');
+  valueCapacities.forEach ((valueCapacity) => {
+    valueCapacity.setAttribute('disabled', 'disabled');
 
     if ( roomCapacities.some((element) => {
-      return element === Number(capacityValue.value);
+      return element === Number(valueCapacity.value);
     }) ) {
-      capacityValue.removeAttribute('disabled');
+      valueCapacity.removeAttribute('disabled');
     }
   });
 
   capacity.value = roomCapacities[0];
 };
 
-disabledCapasity();
+disableCapasity();
 
 roomNumber.addEventListener('change', () => {
-  disabledCapasity();
+  disableCapasity();
 });
 
 //Функции, отслеживающие изменения фильтров
@@ -245,7 +250,7 @@ const resetForm = () => {
   );
   adForm.reset();
   clearImage();
-  disabledCapasity();
+  disableCapasity();
   moveMarkerCenter();
 };
 
@@ -255,12 +260,13 @@ buttonReset.addEventListener('click', (evt) => {
 });
 
 //Функция отправки формы
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = () => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData (
-      () => onSuccess(),
+      // () => onSuccess(),
+      () => getMessage(true),
       () => getMessage(false),
       new FormData(evt.target),
     );

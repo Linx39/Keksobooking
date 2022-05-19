@@ -10,14 +10,11 @@ const getData = (onSuccess, onError) => {
   fetch(Urls.GET)
     .then(checkStatus)
     .then((response) => response.json())
-    .then((json) => {
-      onSuccess(json);
-    })
-    .catch((error) => {
-      onError(error);
-    });
+    .then((json) => onSuccess(json))
+    .catch((error) => onError(error));
 };
 
+//Отправка данных на сервер
 const sendData = (onSuccess, onError, body) => {
   fetch(
     Urls.SEND,
@@ -27,9 +24,7 @@ const sendData = (onSuccess, onError, body) => {
     })
     .then (checkStatus)
     .then (() => onSuccess())
-    .catch(() => {
-      onError();
-    });
+    .catch(() => onError());
 };
 
 export { getData, sendData };
