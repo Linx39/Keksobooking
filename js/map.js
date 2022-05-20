@@ -1,8 +1,7 @@
 /* global L:readonly */
 
-import { disableForm, enableFormAd, enableFormFilter } from './form-function.js'
 import { createCostumPopup } from './popup.js';
-import { filterForm } from './user-form.js';
+import { disableForms, enableFormAd, enableFormFilter, filterPopup } from './user-form.js';
 
 const NOTICE_COUNT = 10;
 const DIGIT = 5;
@@ -41,7 +40,7 @@ const address = document.querySelector('[name="address"]');
 
 //Функция загрузки карты и активации формы
 const loadMap = (cb) => {
-  disableForm();
+  disableForms();
 
   map.on('load', () => {
     address.value = `${Center.LAT}, ${Center.LNG}`;
@@ -80,23 +79,15 @@ let popupMarkers = [];
 
 const renderPopups = (popups) => {
 
-  //Удаление старых меток и попапа перед загрузкой новых
+  //Удаление предыдущих маркеров перед загрузкой новых
   popupMarkers.forEach ((marker) => {
     map.removeLayer(marker);
   });
   popupMarkers = [];
 
-  
-  const popupPane = document.querySelector('.leaflet-popup-pane');              //фигня
-  while (popupPane.firstChild) {
-    popupPane.removeChild(popupPane.firstChild);
-  }
-
-
-
   //Добавление маркеров объявлений на карту
   popups
-    .filter (filterForm)
+    .filter (filterPopup)
     .slice(0, NOTICE_COUNT)
     .forEach ((popup) => {
       const popupMarker = L.marker({
@@ -107,7 +98,7 @@ const renderPopups = (popups) => {
         icon: pinIcon,
       });
 
-      popupMarkers.push(popupMarker)
+      popupMarkers.push(popupMarker);
 
       popupMarker
         .addTo(map)
@@ -117,8 +108,6 @@ const renderPopups = (popups) => {
             keepInView: true,
           });
     });
-
-
 
   //Активация формы с фильтрами
   if (popups) {

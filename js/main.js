@@ -1,11 +1,10 @@
 /* global _:readonly */
 
-import './user-form.js';
-import './image-download.js';
+// import './image-download.js';
 import { loadMap, renderPopups} from './map.js';
 import { getData } from './api.js';
 import { setUserFormSubmit, changeHousingType, changeHousingPrice, changeHousingRooms, changeHousingGuests, changeFilterWifi, changeFilterDishwasher, changeFilterParking, changeFilterWasher, changeFilterElevator, changeFilterConditioner } from './user-form.js';
-import { showAlert } from './form-function.js';
+import { showAlert } from './util.js';
 
 const RERENDER_DELAY = 500;
 
