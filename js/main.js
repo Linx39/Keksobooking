@@ -1,26 +1,25 @@
 /* global _:readonly */
 
-// import './image-download.js';
 import { loadMap, renderPopups} from './map.js';
 import { getData } from './api.js';
-import { setUserFormSubmit, changeHousingType, changeHousingPrice, changeHousingRooms, changeHousingGuests, changeFilterWifi, changeFilterDishwasher, changeFilterParking, changeFilterWasher, changeFilterElevator, changeFilterConditioner } from './user-form.js';
+import { setUserFormSubmit, onHousingGuestsChange, onHousingPriceChange, onHousingRoomsChange, onHousingTypeChange, onFilterConditionerClick, onFilterDishwasherClick,onFilterElevatorClick,onFilterParkingClick, onFilterWasherClick, onFilterWifiClick } from './user-form.js';
 import { showAlert } from './util.js';
 
 const RERENDER_DELAY = 500;
 
 const loadPopup = ()=> {
-  getData((notice) => {
-    renderPopups(notice);
-    changeHousingType(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeHousingPrice(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeHousingRooms(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeHousingGuests(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeFilterWifi(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeFilterDishwasher(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeFilterParking(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeFilterWasher(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeFilterElevator(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
-    changeFilterConditioner(_.debounce(() => renderPopups(notice), RERENDER_DELAY));
+  getData((cards) => {
+    renderPopups(cards);
+    onHousingTypeChange(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onHousingPriceChange(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onHousingRoomsChange(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onHousingGuestsChange(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onFilterWifiClick(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onFilterDishwasherClick(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onFilterParkingClick(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onFilterWasherClick(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onFilterElevatorClick(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
+    onFilterConditionerClick(_.debounce(() => renderPopups(cards), RERENDER_DELAY));
   },
   (error) => showAlert(`Упс... Ошибка загрузки данных... ${error}`),
   )
@@ -28,5 +27,4 @@ const loadPopup = ()=> {
 
 loadMap(loadPopup);
 
-// setUserFormSubmit(() => getMessage(true));
 setUserFormSubmit();

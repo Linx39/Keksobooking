@@ -62,6 +62,24 @@ const filterConditioner = mapFilters.querySelector('#filter-conditioner');
 title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';                     //для проверки
 price.value = '1500';                                                             //для проверки
 
+//Функция, блокирующаяя невалидные значения "количества гостей"
+const disableCapasity = () => {
+  const roomCapacities = roomCapacity[roomNumber.value];
+  const valueCapacities = capacity.querySelectorAll('[value]');
+
+  valueCapacities.forEach ((valueCapacity) => {
+    valueCapacity.setAttribute('disabled', 'disabled');
+
+    if ( roomCapacities.some((element) => {
+      return element === Number(valueCapacity.value);
+    }) ) {
+      valueCapacity.removeAttribute('disabled');
+    }
+  });
+
+  capacity.value = roomCapacities[0];
+};
+
 //Функции блокирования/разблокирования полей формы
 const disableElement = (form, field) => {
   const formFields = form.querySelectorAll(field);
@@ -92,7 +110,8 @@ const disableForms = () => {
 //Функции активации форм и разблокирования полей
 const enableFormAd = () => {
   adForm.classList.remove('ad-form--disabled');
-  enableElement(adForm, 'fieldset')
+  enableElement(adForm, 'fieldset');
+  disableCapasity();
 };
 
 const enableFormFilter = () => {
@@ -102,9 +121,9 @@ const enableFormFilter = () => {
 };
 
 //Валидация поля "заголовок"
-title.addEventListener('input', () => {
+const checkLengthTitle = () => {  
   const titleLength = title.value.length;
-
+  
   if (titleLength < Title_Length.MIN) {
     title.setCustomValidity(`Минимальное количество символов ${Title_Length.MIN}. Осталось добавить символов: ${Title_Length.MIN - titleLength}.`);
   } else if (titleLength > Title_Length.MAX) {
@@ -112,9 +131,11 @@ title.addEventListener('input', () => {
   } else {
     title.setCustomValidity('');
   }
+  
+  title.reportValidity();  
+};
 
-  title.reportValidity();
-});
+title.addEventListener('input', () => checkLengthTitle());
 
 //Запрет редактирования поля "адрес"
 address.setAttribute('readonly', 'readonly');
@@ -154,67 +175,48 @@ timeout.addEventListener('change', () => {
 });
 
 //Синхронизация полей "количество комнат"/"количество гостей"
-const disableCapasity = () => {
-  const roomCapacities = roomCapacity[roomNumber.value];
-  const valueCapacities = capacity.querySelectorAll('[value]');
-
-  valueCapacities.forEach ((valueCapacity) => {
-    valueCapacity.setAttribute('disabled', 'disabled');
-
-    if ( roomCapacities.some((element) => {
-      return element === Number(valueCapacity.value);
-    }) ) {
-      valueCapacity.removeAttribute('disabled');
-    }
-  });
-
-  capacity.value = roomCapacities[0];
-};
-
-// disableCapasity();
-
 roomNumber.addEventListener('change', () => {
   disableCapasity();
 });
 
 //Функции, отслеживающие изменения фильтров
-const changeHousingType = (cb) => {
+const onHousingTypeChange = (cb) => {
   housingType.addEventListener('change', () => cb())
 };
 
-const changeHousingPrice = (cb) => {
+const onHousingPriceChange = (cb) => {
   housingPrice.addEventListener('change', () => cb())
 };
 
-const changeHousingRooms = (cb) => {
+const onHousingRoomsChange = (cb) => {
   housingRooms.addEventListener('change', () => cb())
 };
 
-const changeHousingGuests = (cb) => {
+const onHousingGuestsChange = (cb) => {
   housingGuests.addEventListener('change', () => cb())
 };
 
-const changeFilterWifi = (cb) => {
+const onFilterWifiClick = (cb) => {
   filterWifi.addEventListener('click', () => cb())
 };
 
-const changeFilterDishwasher = (cb) => {
+const onFilterDishwasherClick  = (cb) => {
   filterDishwasher.addEventListener('click', () => cb())
 };
 
-const changeFilterParking = (cb) => {
+const onFilterParkingClick  = (cb) => {
   filterParking.addEventListener('click', () => cb())
 };
 
-const changeFilterWasher = (cb) => {
+const onFilterWasherClick  = (cb) => {
   filterWasher.addEventListener('click', () => cb())
 };
 
-const changeFilterElevator = (cb) => {
+const onFilterElevatorClick  = (cb) => {
   filterElevator.addEventListener('click', () => cb())
 };
 
-const changeFilterConditioner = (cb) => {
+const onFilterConditionerClick  = (cb) => {
   filterConditioner.addEventListener('click', () => cb())
 };
 
@@ -347,4 +349,4 @@ const setUserFormSubmit = () => {
   });
 };
 
-export { disableForms, enableFormAd, enableFormFilter, setUserFormSubmit, resetForm, filterPopup, changeHousingType, changeHousingPrice, changeHousingRooms, changeHousingGuests, changeFilterWifi, changeFilterDishwasher, changeFilterParking, changeFilterWasher, changeFilterElevator, changeFilterConditioner };
+export { disableForms, enableFormAd, enableFormFilter, setUserFormSubmit, resetForm, filterPopup, onHousingGuestsChange, onHousingPriceChange, onHousingRoomsChange, onHousingTypeChange, onFilterConditionerClick, onFilterDishwasherClick,onFilterElevatorClick,onFilterParkingClick, onFilterWasherClick, onFilterWifiClick };
