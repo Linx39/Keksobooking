@@ -4,7 +4,7 @@ import { createCostumPopup } from './popup.js';
 import { disableForms, enableFormAd, enableFormFilter, filterPopup } from './user-form.js';
 
 const NOTICE_COUNT = 10;
-const DIGIT = 5;
+const NUMBER_OF_DIGIT = 5;
 
 const Center = {
   LAT: 35.68950,
@@ -65,7 +65,7 @@ const loadMap = (cb) => {
 //Функция премещения маркера
 mainMarker.on('moveend', (evt) => {
   const markerLatLng = evt.target.getLatLng();
-  address.value = `${markerLatLng.lat.toFixed(DIGIT)}, ${markerLatLng.lng.toFixed(DIGIT)}`;
+  address.value = `${markerLatLng.lat.toFixed(NUMBER_OF_DIGIT)}, ${markerLatLng.lng.toFixed(NUMBER_OF_DIGIT)}`;
 });
 
 //Функция возвращения маркера в центр

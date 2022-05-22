@@ -40,7 +40,7 @@ const adForm = document.querySelector('.ad-form');
 const title = adForm.querySelector('#title');
 const type = adForm.querySelector('#type');
 const price = adForm.querySelector('#price');
-const address = adForm.querySelector('[name="address"]');
+const address = adForm.querySelector('#address');
 const timein = adForm.querySelector('#timein');
 const timeout = adForm.querySelector('#timeout');
 const roomNumber = adForm.querySelector('#room_number');
@@ -58,9 +58,6 @@ const filterParking = mapFilters.querySelector('#filter-parking');
 const filterWasher = mapFilters.querySelector('#filter-washer');
 const filterElevator = mapFilters.querySelector('#filter-elevator');
 const filterConditioner = mapFilters.querySelector('#filter-conditioner');
-
-title.value = 'nvdjfdfjdvjngvjdfudfhvjcvnjdfgfjgvnjnjfgfjgv';                     //для проверки
-price.value = '1500';                                                             //для проверки
 
 //Функция, блокирующаяя невалидные значения "количества гостей"
 const disableCapasity = () => {
@@ -149,7 +146,7 @@ type.addEventListener('change', () => {
 });
 
 //Валидация поля "цена"
-price.addEventListener ('input', () => {
+const checkPriceValue = () => {
   if (price.value > PRICE_MAX) {
     price.setCustomValidity(`Цена не может быть больше ${PRICE_MAX} ₽/ночь`);
   } else {
@@ -163,7 +160,9 @@ price.addEventListener ('input', () => {
   }
 
   price.reportValidity();
-});
+}
+
+price.addEventListener ('input', () => checkPriceValue());
 
 //Синхронизация полей "заезд"/"выезд"
 timein.addEventListener('change', () => {
@@ -175,9 +174,7 @@ timeout.addEventListener('change', () => {
 });
 
 //Синхронизация полей "количество комнат"/"количество гостей"
-roomNumber.addEventListener('change', () => {
-  disableCapasity();
-});
+roomNumber.addEventListener('change', () => disableCapasity());
 
 //Функции, отслеживающие изменения фильтров
 const onHousingTypeChange = (cb) => {

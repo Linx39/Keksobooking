@@ -35,11 +35,11 @@ const createCostumPopup = ({author: {avatar}, offer: {title, address, price, typ
   }
 
   cardElement.querySelector('.popup__description').textContent = description;
-
+  
+  const popupPhotos = cardElement.querySelector('.popup__photos');
+  const imageElement = popupPhotos.querySelector('.popup__photo');
+  popupPhotos.removeChild(imageElement);
   if (photos) {
-    const popupPhotos = cardElement.querySelector('.popup__photos');
-    const imageElement = popupPhotos.querySelector('.popup__photo');
-    popupPhotos.removeChild(imageElement);
     const fragmentPhotos = document.createDocumentFragment();
     photos.forEach((photo) => {
       const photoElement = imageElement.cloneNode(true);
