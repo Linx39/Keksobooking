@@ -11,14 +11,16 @@
     "url": "{{bugsUrl}}"
   },
   "devDependencies": {
-    "browser-sync": "2.26.14",
+    "browser-sync": "^2.27.10",
     "eslint": "7.18.0",
-    "eslint-config-htmlacademy": "2.0.0"
+    "eslint-config-htmlacademy": "2.0.0",
+    "webpack": "5.72.1",
+    "webpack-cli": "4.9.2"
   },
   "license": "MIT",
-  "dependencies": {},
   "scripts": {
-    "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
+    "build": "webpack --mode production",
+    "start": "browser-sync start --server \"build/\" --no-ui --files \"source/**/*.js\"",
     "test": "eslint js/"
   },
   "engines": {
