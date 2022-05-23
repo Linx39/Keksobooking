@@ -118,9 +118,9 @@ const enableFormFilter = () => {
 };
 
 //Валидация поля "заголовок"
-const checkLengthTitle = () => {  
+const checkLengthTitle = () => {
   const titleLength = title.value.length;
-  
+
   if (titleLength < Title_Length.MIN) {
     title.setCustomValidity(`Минимальное количество символов ${Title_Length.MIN}. Осталось добавить символов: ${Title_Length.MIN - titleLength}.`);
   } else if (titleLength > Title_Length.MAX) {
@@ -128,8 +128,8 @@ const checkLengthTitle = () => {
   } else {
     title.setCustomValidity('');
   }
-  
-  title.reportValidity();  
+
+  title.reportValidity();
 };
 
 title.addEventListener('input', () => checkLengthTitle());
@@ -219,10 +219,7 @@ const onFilterConditionerClick  = (cb) => {
 
 //Функция, определяющая правила фильтрация попапов
 const filterPopup = ({offer: {price, type, rooms, guests, features}}) => {
-  let isHousingType = false;
-  if (housingType.value === Default_Value.HOUSING_TYPE || housingType.value === type) {
-    isHousingType = true;
-  }
+  const isHousingType = (housingType.value === Default_Value.HOUSING_TYPE || housingType.value === type)? true : false;
 
   let priceValue;
   if (price < priceRank.low) {
@@ -234,36 +231,20 @@ const filterPopup = ({offer: {price, type, rooms, guests, features}}) => {
   if (price > priceRank.middle) {
     priceValue = 'high';
   }
+  const isHousingPrice = (housingPrice.value === Default_Value.HOUSING_PRICE || housingPrice.value === priceValue)? true : false;
 
-  let isHousingPrice = false;
-  if (housingPrice.value === Default_Value.HOUSING_PRICE || housingPrice.value === priceValue) {
-    isHousingPrice = true;
-  }
+  const isHousingRooms = (housingRooms.value === Default_Value.HOUSING_ROOMS || housingRooms.value === String(rooms))? true : false;
 
-  let isHousingRooms = false;
-  if (housingRooms.value === Default_Value.HOUSING_ROOMS || housingRooms.value === String(rooms)) {
-    isHousingRooms = true;
-  }
-
-  let isHousingGuests = false;
-  if (housingGuests.value === Default_Value.HOUSING_GUEST || housingGuests.value === String(guests)) {
-    isHousingGuests = true;
-  }
+  const isHousingGuests = (housingGuests.value === Default_Value.HOUSING_GUEST || housingGuests.value === String(guests))? true : false;
 
   //Функция, проверяющая выбран ли элемент для фильтра
   const isFilterElement = (filterElement) => {
-    let isFilter = false;
-
     let isElement = true;
     if (Array.isArray(features)) {
       isElement = features.some( element => {return filterElement.value === element} );
     }
 
-    if (filterElement.checked & isElement || !filterElement.checked) {
-      isFilter = true;
-    }
-
-    return isFilter;
+    return (filterElement.checked & isElement || !filterElement.checked)? true : false;
   };
 
   const isFilterWifi = isFilterElement(filterWifi);
@@ -273,9 +254,8 @@ const filterPopup = ({offer: {price, type, rooms, guests, features}}) => {
   const isFilterElevator = isFilterElement(filterElevator);
   const isFilterConditioner = isFilterElement(filterConditioner);
 
-  if (isHousingType & isHousingPrice & isHousingRooms & isHousingGuests & isFilterWifi & isFilterDishwasher & isFilterParking & isFilterWasher & isFilterElevator & isFilterConditioner) {
-    return true;
-  }
+  return isHousingType & isHousingPrice & isHousingRooms & isHousingGuests & isFilterWifi & isFilterDishwasher & isFilterParking & isFilterWasher & isFilterElevator & isFilterConditioner;
+
 };
 
 //Функции очистки формы
@@ -299,10 +279,8 @@ buttonReset.addEventListener('click', (evt) => {
 
 //Функция получения сообщения об отправке формы
 const getMessage = (isSuccess) => {
-  let result = 'error';
-  if (isSuccess) {
-    result = 'success';
-  }
+
+  const result = isSuccess? 'success': 'error';
 
   const messageSubmit = document.querySelector(`#${result}`).content.querySelector(`.${result}`).cloneNode(true);
 
