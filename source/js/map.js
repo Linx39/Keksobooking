@@ -1,7 +1,8 @@
 /* global L:readonly */
 
-import { createCostumPopup } from './popup.js';
-import { disableForms, enableFormAd, enableFormFilter, filterPopup } from './user-form.js';
+import { createCustomPopup } from './popup.js';
+import { disableForms, enableFormAd, enableFormFilter } from './user-form.js';
+import { filterPopup } from './filters.js';
 
 const NOTICE_COUNT = 10;
 const NUMBER_OF_DIGIT = 5;
@@ -38,21 +39,26 @@ const mainMarker = L.marker(
 
 const address = document.querySelector('[name="address"]');
 
+//Функция централизации карты
+const mapSetViewCenter = () => {
+  map.setView({
+    lat: Center.LAT,
+    lng: Center.LNG,
+  }, 10);
+};
+
 //Функция загрузки карты и активации формы
 const loadMap = (cb) => {
   disableForms();
 
   map.on('load', () => {
-    address.value = `${Center.LAT}, ${Center.LNG}`;
+    address.value = `${Center.LAT.toFixed(NUMBER_OF_DIGIT)}, ${Center.LNG.toFixed(NUMBER_OF_DIGIT)}`;
     mainMarker.addTo(map);
     enableFormAd();
     cb();
   })
 
-  map.setView({
-    lat: Center.LAT,
-    lng: Center.LNG,
-  }, 10);
+  mapSetViewCenter();
 
   L.tileLayer(
     'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -63,7 +69,7 @@ const loadMap = (cb) => {
 };
 
 //Функция премещения маркера
-mainMarker.on('moveend', (evt) => {
+mainMarker.on('move', (evt) => {
   const markerLatLng = evt.target.getLatLng();
   address.value = `${markerLatLng.lat.toFixed(NUMBER_OF_DIGIT)}, ${markerLatLng.lng.toFixed(NUMBER_OF_DIGIT)}`;
 });
@@ -71,7 +77,7 @@ mainMarker.on('moveend', (evt) => {
 //Функция возвращения маркера в центр
 const moveMarkerCenter = () => {
   mainMarker.setLatLng({lat: Center.LAT, lng: Center.LNG});
-  address.value = `${Center.LAT}, ${Center.LNG}`;
+  address.value = `${Center.LAT.toFixed(NUMBER_OF_DIGIT)}, ${Center.LNG.toFixed(NUMBER_OF_DIGIT)}`;
 };
 
 //Функция добавления меток объявлений
@@ -103,7 +109,7 @@ const renderPopups = (popups) => {
       popupMarker
         .addTo(map)
         .bindPopup(
-          createCostumPopup(popup),
+          createCustomPopup(popup),
           {
             keepInView: true,
           });
@@ -115,4 +121,4 @@ const renderPopups = (popups) => {
   }
 };
 
-export { loadMap, renderPopups, moveMarkerCenter };
+export { loadMap, renderPopups, moveMarkerCenter, mapSetViewCenter };

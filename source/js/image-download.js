@@ -1,4 +1,6 @@
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const IMG_SRC_DEFAULT = 'img/muffin-grey.svg';
+
 
 const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
 const previewAvatar = document.querySelector('.ad-form-header__preview img');
@@ -15,6 +17,7 @@ const downloadImage = (fileChooser, preview) => {
     if (matches) {
       const reader = new FileReader();
       reader.addEventListener('load', () => {
+
         preview.src = reader.result;
       });
       reader.readAsDataURL(file);
@@ -23,7 +26,7 @@ const downloadImage = (fileChooser, preview) => {
 };
 
 const clearImage = () => {
-  previewAvatar.src = '';
+  previewAvatar.src = IMG_SRC_DEFAULT;
   previewHousing.src = '';
 }
 

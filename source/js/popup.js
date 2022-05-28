@@ -1,59 +1,102 @@
 const typeRus = {
-  'bungalow': 'Бунгало',
-  'flat': 'Квартира',
-  'house': 'Дом',
-  'palace': 'Дворец',
+  bungalow: 'Бунгало',
+  flat: 'Квартира',
+  house: 'Дом',
+  palace: 'Дворец',
 };
 
+const templatePopup = document.querySelector('#card').content.querySelector('.popup');
+
 //Создание попапа с объявлением
-const createCostumPopup = ({author: {avatar}, offer: {title, address, price, type, rooms, guests, checkin, checkout, features, description, photos} }) => {
-  const templatePopup = document.querySelector('#card').content.querySelector('.popup');
+const createCustomPopup = ({author, offer}) => {  
+  const {avatar} = author;
+  const {
+    title,
+    address,
+    price,
+    type,
+    rooms,
+    guests,
+    checkin,
+    checkout,
+    features,
+    description,
+    photos,
+  } = offer;
+
   const cardElement = templatePopup.cloneNode(true);
+
+  const createPopupFeatures = () => {
+    const popupFeatures = cardElement.querySelector('.popup__features');
+    if (features) {
+      while (popupFeatures.firstChild) {
+        popupFeatures.removeChild(popupFeatures.firstChild);
+      }
+      const fragmentFeatures = document.createDocumentFragment();
+      features.forEach((feature) => {
+        const featureElement = document.createElement('li');
+        const classFeutureElement = `popup__feature--${feature}`;
+        featureElement.classList.add('popup__feature');
+        featureElement.classList.add(classFeutureElement);
+        fragmentFeatures.appendChild(featureElement);
+      });
+      popupFeatures.appendChild(fragmentFeatures);
+    }
+
+    if (!features) {
+      popupFeatures.remove();
+    }
+  };
+
+  const createPopupDescription = () => {
+    const popupDescription = cardElement.querySelector('.popup__description')
+    if (description) {
+      popupDescription.textContent = description;
+    }
+    if (!description) {
+      popupDescription.remove();
+    }
+  };
+
+  const createPopupPhotos = () => {
+    const popupPhotos = cardElement.querySelector('.popup__photos');
+    const imageElement = popupPhotos.querySelector('.popup__photo');
+    popupPhotos.removeChild(imageElement);
+    if (photos) {
+      photos.forEach((photo) => {
+        const photoElement = imageElement.cloneNode(true);
+        photoElement.src = photo;
+        popupPhotos.appendChild(photoElement);
+      })
+    }
+    if (!photos) {
+      popupPhotos.remove();
+    }
+  };
+
+  const createPopupAvatar = () => {
+    const popupAvatar = cardElement.querySelector('.popup__avatar');
+    if (avatar) {
+      popupAvatar.src = avatar;
+    }
+    if (!avatar) {
+      popupAvatar.remove();
+    }
+  };
 
   cardElement.querySelector('.popup__title').textContent = title;
   cardElement.querySelector('.popup__text--address').textContent = address;
   cardElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
   cardElement.querySelector('.popup__type ').textContent = typeRus[type];
-
   cardElement.querySelector('.popup__text--capacity').textContent = `${rooms} комнаты для ${guests} гостей`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin} выезд до ${checkout}`;
 
-  if (features) {
-    const popupFeatures = cardElement.querySelector('.popup__features');
-    while (popupFeatures.firstChild) {
-      popupFeatures.removeChild(popupFeatures.firstChild);
-    }
-    const fragmentFeatures = document.createDocumentFragment();
-    features.forEach((feature) => {
-      const featureElement = document.createElement('li');
-      const classFeutureElement = `popup__feature--${feature}`;
-      featureElement.classList.add('popup__feature');
-      featureElement.classList.add(classFeutureElement);
-      fragmentFeatures.appendChild(featureElement);
-    });
-    popupFeatures.appendChild(fragmentFeatures);
-  }
-
-  cardElement.querySelector('.popup__description').textContent = description;
-  
-  const popupPhotos = cardElement.querySelector('.popup__photos');
-  const imageElement = popupPhotos.querySelector('.popup__photo');
-  popupPhotos.removeChild(imageElement);
-  if (photos) {
-    const fragmentPhotos = document.createDocumentFragment();
-    photos.forEach((photo) => {
-      const photoElement = imageElement.cloneNode(true);
-      photoElement.src = photo;
-      fragmentPhotos.appendChild(photoElement);
-    })
-    popupPhotos.appendChild(fragmentPhotos);
-  }
-
-  if (avatar) {
-    cardElement.querySelector('.popup__avatar').src = avatar;
-  }
+  createPopupFeatures();
+  createPopupDescription();  
+  createPopupPhotos();
+  createPopupAvatar();
 
   return cardElement;
 }
 
-export { createCostumPopup };
+export { createCustomPopup };
