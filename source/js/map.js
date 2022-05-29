@@ -56,7 +56,7 @@ const loadMap = (cb) => {
     mainMarker.addTo(map);
     enableFormAd();
     cb();
-  })
+  });
 
   mapSetViewCenter();
 
@@ -81,25 +81,13 @@ const moveMarkerCenter = () => {
 };
 
 //Функция добавления меток объявлений
-// let popupMarkers = [];
-
-
+const popupMarkers = L.layerGroup();
 
 const renderPopups = (popups) => {
-
   //Удаление предыдущих маркеров перед загрузкой новых
-  // popupMarkers.forEach ((marker) => {
-  //   map.removeLayer(marker);
-  // });
-  // popupMarkers = [];
-  let popupMarkers = L.layerGroup();
-
-  map.removeLayer(popupMarkers);
-  console.log (0, popupMarkers)
   popupMarkers.clearLayers();
-  console.log (1, popupMarkers)
 
-  //Добавление маркеров объявлений на карту
+  //Создание маркеров
   popups
     .filter (filterPopup)
     .slice(0, NOTICE_COUNT)
@@ -112,18 +100,18 @@ const renderPopups = (popups) => {
         icon: pinIcon,
       });
 
-      // popupMarkers.push(popupMarker);
-      popupMarkers.addLayer(popupMarker);
-      console.log (2, popupMarkers)
-
       popupMarker
-        .addTo(map)
         .bindPopup(
           createCustomPopup(popup),
           {
             keepInView: true,
           });
+
+      popupMarkers.addLayer(popupMarker);
     });
+
+  //Добавление маркеров объявлений на карту
+  popupMarkers.addTo(map);
 
   //Активация формы с фильтрами
   if (popups) {

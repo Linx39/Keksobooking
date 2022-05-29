@@ -156,13 +156,16 @@ roomNumber.addEventListener('change', () => disableCapacity());
 const resetForm = () => {
   mapFilters.reset();
   adForm.reset();
+
   mapSetViewCenter();
   moveMarkerCenter();
+
   getData((notice) => {
     renderPopups(notice);
   },
   (error) => showAlert(`Упс... Ошибка загрузки данных... ${error}`),
   );
+  
   clearImage();
   price.placeholder = priceMin[type.value];
   disableCapacity();

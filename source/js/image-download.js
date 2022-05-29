@@ -5,7 +5,7 @@ const IMG_SRC_DEFAULT = 'img/muffin-grey.svg';
 const fileChooserAvatar = document.querySelector('.ad-form__field input[type=file]');
 const previewAvatar = document.querySelector('.ad-form-header__preview img');
 const fileChooserHousing = document.querySelector('.ad-form__upload input[type=file]');
-const previewHousing  = document.querySelector('.ad-form__photo img')
+const previewHousing  = document.querySelector('.ad-form__photo img');
 
 const downloadImage = (fileChooser, preview) => {
   fileChooser.addEventListener('change', () => {
@@ -28,10 +28,10 @@ const downloadImage = (fileChooser, preview) => {
 const clearImage = () => {
   previewAvatar.src = IMG_SRC_DEFAULT;
   previewHousing.src = '';
-}
+};
 
 downloadImage(fileChooserAvatar, previewAvatar);
 
 downloadImage(fileChooserHousing, previewHousing);
 
-export { clearImage }
+export { clearImage };

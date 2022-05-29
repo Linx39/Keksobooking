@@ -13,7 +13,7 @@ const typeRus = {
 const templatePopup = document.querySelector('#card').content.querySelector('.popup');
 
 //Создание попапа с объявлением
-const createCustomPopup = ({author, offer}) => {  
+const createCustomPopup = ({author, offer}) => {
   const {avatar} = author;
   const {
     title,
@@ -37,15 +37,14 @@ const createCustomPopup = ({author, offer}) => {
       while (popupFeatures.firstChild) {
         popupFeatures.removeChild(popupFeatures.firstChild);
       }
-      const fragmentFeatures = document.createDocumentFragment();
+
       features.forEach((feature) => {
         const featureElement = document.createElement('li');
         const classFeutureElement = `popup__feature--${feature}`;
         featureElement.classList.add('popup__feature');
         featureElement.classList.add(classFeutureElement);
-        fragmentFeatures.appendChild(featureElement);
+        popupFeatures.appendChild(featureElement);
       });
-      popupFeatures.appendChild(fragmentFeatures);
     }
 
     if (!features) {
@@ -58,6 +57,7 @@ const createCustomPopup = ({author, offer}) => {
     if (description) {
       popupDescription.textContent = description;
     }
+
     if (!description) {
       popupDescription.remove();
     }
@@ -74,6 +74,7 @@ const createCustomPopup = ({author, offer}) => {
         popupPhotos.appendChild(photoElement);
       })
     }
+
     if (!photos) {
       popupPhotos.remove();
     }
@@ -84,6 +85,7 @@ const createCustomPopup = ({author, offer}) => {
     if (avatar) {
       popupAvatar.src = avatar;
     }
+
     if (!avatar) {
       popupAvatar.remove();
     }
@@ -96,11 +98,11 @@ const createCustomPopup = ({author, offer}) => {
   cardElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${getDeclination(rooms, roomsDeclination)} для ${guests} ${getDeclination(guests, guestsDeclination)}`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin} выезд до ${checkout}`;
   createPopupFeatures();
-  createPopupDescription();  
+  createPopupDescription();
   createPopupPhotos();
   createPopupAvatar();
 
   return cardElement;
-}
+};
 
 export { createCustomPopup };

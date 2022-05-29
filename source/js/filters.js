@@ -41,21 +41,10 @@ const filterPopup = ({offer}) => {
   };
 
   //Функции, проверяющая выбор значений для фильтра
-  const isFilterType = () => {
-    return housingType.value === Default_Value.HOUSING_TYPE || housingType.value === type;
-  };
-
-  const isFilterPrice = () => {
-    return housingPrice.value === Default_Value.HOUSING_PRICE || housingPrice.value === priceValue();
-  };
-
-  const isFilterRooms = () => {
-    return housingRooms.value === Default_Value.HOUSING_ROOMS || housingRooms.value === String(rooms);
-  };
-
-  const isFilterGuests = () => {
-    return housingGuests.value === Default_Value.HOUSING_GUEST || housingGuests.value === String(guests);
-  };
+  const isFilterType = () => housingType.value === Default_Value.HOUSING_TYPE || housingType.value === type;
+  const isFilterPrice = () => housingPrice.value === Default_Value.HOUSING_PRICE || housingPrice.value === priceValue();
+  const isFilterRooms = () => housingRooms.value === Default_Value.HOUSING_ROOMS || housingRooms.value === String(rooms);
+  const isFilterGuests = () => housingGuests.value === Default_Value.HOUSING_GUEST || housingGuests.value === String(guests);
 
   const isFilterFeatures = () => {
     let isFilter = true;
@@ -66,20 +55,19 @@ const filterPopup = ({offer}) => {
         isElement = features.some(element => filterElement.value === element);
       }
 
-      let isFilterElement = filterElement.checked && isElement || !filterElement.checked;
+      const isFilterElement = filterElement.checked && isElement || !filterElement.checked;
 
-      isFilter =  isFilter && isFilterElement;    
+      isFilter =  isFilter && isFilterElement;
     });
 
     return isFilter;
   };
-  
+
   return isFilterType()
       && isFilterPrice()
       && isFilterRooms()
       && isFilterGuests()
-      && isFilterFeatures()
-
+      && isFilterFeatures();
 };
 
 export { filterPopup, onFormMapFiltersChange };

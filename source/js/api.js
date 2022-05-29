@@ -3,7 +3,7 @@ import { checkStatus } from './util.js';
 const Urls = {
   GET: 'https://23.javascript.pages.academy/keksobooking/data',
   SEND: 'https://23.javascript.pages.academy/keksobooking',
-}
+};
 
 //Получение данных с сервера
 const getData = (onSuccess, onError) => {
