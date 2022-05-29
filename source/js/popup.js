@@ -1,3 +1,8 @@
+import { getDeclination } from './util.js';
+
+const roomsDeclination = ['комната', 'комнаты', 'комнат'];
+const guestsDeclination = ['гостя', 'гостей', 'гостей'];
+
 const typeRus = {
   bungalow: 'Бунгало',
   flat: 'Квартира',
@@ -88,9 +93,8 @@ const createCustomPopup = ({author, offer}) => {
   cardElement.querySelector('.popup__text--address').textContent = address;
   cardElement.querySelector('.popup__text--price').textContent = `${price} ₽/ночь`;
   cardElement.querySelector('.popup__type ').textContent = typeRus[type];
-  cardElement.querySelector('.popup__text--capacity').textContent = `${rooms} комнаты для ${guests} гостей`;
+  cardElement.querySelector('.popup__text--capacity').textContent = `${rooms} ${getDeclination(rooms, roomsDeclination)} для ${guests} ${getDeclination(guests, guestsDeclination)}`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${checkin} выезд до ${checkout}`;
-
   createPopupFeatures();
   createPopupDescription();  
   createPopupPhotos();

@@ -73,18 +73,6 @@ const filterPopup = ({offer}) => {
 
     return isFilter;
   };
-
-  // const isHousingType = isFilterType();
-  // const isHousingPrice = isFilterPrice();
-  // const isHousingRooms = isFilterRooms();
-  // const isHousingGuests = isFilterGuests();
-  // const isHousingFeatures = isFilterFeatures();
-
-  // return isHousingType
-  //     && isHousingPrice
-  //     && isHousingRooms 
-  //     && isHousingGuests
-  //     && isHousingFeatures
   
   return isFilterType()
       && isFilterPrice()

@@ -81,15 +81,23 @@ const moveMarkerCenter = () => {
 };
 
 //Функция добавления меток объявлений
-let popupMarkers = [];
+// let popupMarkers = [];
+
+
 
 const renderPopups = (popups) => {
 
   //Удаление предыдущих маркеров перед загрузкой новых
-  popupMarkers.forEach ((marker) => {
-    map.removeLayer(marker);
-  });
-  popupMarkers = [];
+  // popupMarkers.forEach ((marker) => {
+  //   map.removeLayer(marker);
+  // });
+  // popupMarkers = [];
+  let popupMarkers = L.layerGroup();
+
+  map.removeLayer(popupMarkers);
+  console.log (0, popupMarkers)
+  popupMarkers.clearLayers();
+  console.log (1, popupMarkers)
 
   //Добавление маркеров объявлений на карту
   popups
@@ -104,7 +112,9 @@ const renderPopups = (popups) => {
         icon: pinIcon,
       });
 
-      popupMarkers.push(popupMarker);
+      // popupMarkers.push(popupMarker);
+      popupMarkers.addLayer(popupMarker);
+      console.log (2, popupMarkers)
 
       popupMarker
         .addTo(map)
